@@ -1,0 +1,704 @@
+<!DOCTYPE html>
+<html lang="tl">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no, viewport-fit=cover">
+<meta name="theme-color" content="#7fb069">
+<link rel="icon" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'><text y='.9em' font-size='90'>🛒</text></svg>">
+<title>Tiny Tindahan (1990–2026)</title>
+<style>
+*{box-sizing:border-box;-webkit-tap-highlight-color:transparent}
+html,body{margin:0;padding:0;background:#2b2118;font-family:"Segoe UI",system-ui,-apple-system,Roboto,"Helvetica Neue",Arial,sans-serif;color:#3a2a1a}
+#wrap{max-width:480px;margin:0 auto;min-height:100dvh;background:#fff8ec;display:flex;flex-direction:column;position:relative;box-shadow:0 0 40px #0008}
+#topbar{display:flex;align-items:center;gap:8px;padding:10px 10px 6px;background:linear-gradient(#ffdf9e,#ffd07a);border-bottom:3px solid #a9743c;position:sticky;top:0;z-index:30}
+.pill{background:#fff;border:2px solid #a9743c;border-radius:999px;padding:5px 12px;font-weight:800;font-size:14px;min-height:44px;display:flex;align-items:center;gap:6px}
+.pill small{font-weight:600}
+#eraPill{background:#3a2a1a;color:#ffe6b0;border-color:#3a2a1a}
+.iconbtn{margin-left:auto;background:#fff;border:2px solid #a9743c;border-radius:12px;min-width:44px;min-height:44px;font-size:20px;cursor:pointer}
+.iconbtn.on{background:#d8f3c5}
+#stage{position:relative;background:#bfe8ff}
+canvas#game{display:block;width:100%;height:auto;touch-action:manipulation}
+#bubble{position:absolute;left:50%;transform:translateX(-50%);top:8px;max-width:92%;background:#fff;border:3px solid #3a2a1a;border-radius:14px;padding:8px 12px;font-size:14px;display:none;z-index:5;box-shadow:0 4px 0 #0003}
+#bubble b{color:#b3541e}
+#bubble .orderRow{display:flex;gap:6px;margin-top:6px;flex-wrap:wrap}
+#orderPanel{background:#fff;border-top:3px solid #a9743c;padding:8px 10px}
+#orderPanel h3{margin:2px 0 6px;font-size:15px}
+#tray{display:flex;gap:8px;flex-wrap:wrap;min-height:52px}
+.trayItem{border:2px dashed #a9743c;border-radius:10px;padding:4px 8px;font-size:13px;font-weight:700;background:#fff8e6}
+#serveRow{display:flex;gap:8px;margin-top:8px}
+.bigbtn{flex:1;min-height:52px;border-radius:14px;border:3px solid #3a2a1a;font-size:16px;font-weight:900;cursor:pointer}
+#serveBtn{background:#7fb069;color:#fff;text-shadow:0 1px 0 #0006}
+#clearBtn{background:#fff}
+#shelf{display:grid;grid-template-columns:repeat(3,1fr);gap:8px;padding:10px;background:#f7e7c3;border-top:3px solid #a9743c}
+.prod{border:3px solid #3a2a1a;border-radius:14px;background:#fff;padding:6px 4px;text-align:center;cursor:pointer;position:relative;min-height:96px;user-select:none}
+.prod:active{transform:scale(.96)}
+.prod.sel{outline:4px solid #2e9e44;background:#e9ffd9}
+.prod.locked{filter:grayscale(1);opacity:.55}
+.prod .pk{height:44px;display:flex;align-items:center;justify-content:center}
+.prod .nm{font-size:12px;font-weight:900}
+.prod .st{font-size:12px;font-weight:700}
+.prod .pr{font-size:11px;color:#7a5a2e;font-weight:700}
+.prod.pop{animation:pop .35s}
+@keyframes pop{40%{transform:translateY(-8px) scale(1.08)}}
+#tabs{display:flex;background:#3a2a1a;position:sticky;bottom:0;z-index:30}
+#tabs button{flex:1;background:none;border:none;color:#ffe6b0;font-weight:900;font-size:14px;padding:14px 4px;min-height:56px;cursor:pointer}
+#tabs button.act{background:#ffcf6e;color:#3a2a1a}
+.sheet{display:none;padding:12px;max-height:46dvh;overflow:auto;background:#fff8ec;border-top:3px solid #a9743c}
+.sheet.act{display:block}
+.sheet h2{margin:4px 0 8px;font-size:17px}
+.card{border:2px solid #a9743c;border-radius:12px;padding:10px;margin:8px 0;background:#fff}
+.card b{font-size:14px}
+.row{display:flex;gap:8px;align-items:center;flex-wrap:wrap}
+.btn{border:2px solid #3a2a1a;border-radius:12px;background:#ffcf6e;font-weight:900;padding:12px;min-height:48px;font-size:14px;cursor:pointer;flex:1}
+.btn.ghost{background:#fff}
+.btn.green{background:#7fb069;color:#fff}
+.btn:disabled{opacity:.5}
+.note{font-size:12px;color:#7a5a2e}
+.modal{position:fixed;inset:0;background:#000a;display:none;align-items:center;justify-content:center;z-index:99;padding:14px}
+.modal.open{display:flex}
+.box{background:#fff8ec;border:4px solid #3a2a1a;border-radius:18px;max-width:440px;width:100%;max-height:92dvh;overflow:auto;padding:16px}
+.box h1{font-size:22px;margin:6px 0}
+.storyImg{height:150px;border-radius:12px;background:linear-gradient(#9fd8ff,#ffe6b0);border:2px solid #a9743c;display:flex;align-items:center;justify-content:center;font-size:64px;overflow:hidden;position:relative}
+.opt{display:flex;gap:6px;flex-wrap:wrap;margin:6px 0}
+.opt button{border:2px solid #3a2a1a;border-radius:999px;padding:10px 12px;min-height:44px;background:#fff;font-weight:800;cursor:pointer;font-size:13px}
+.opt button.sel{background:#3a2a1a;color:#ffe6b0}
+input[type=text]{width:100%;padding:12px;border:2px solid #3a2a1a;border-radius:12px;font-size:16px;min-height:48px}
+#toast{position:fixed;left:50%;transform:translateX(-50%);bottom:76px;background:#3a2a1a;color:#ffe6b0;padding:10px 16px;border-radius:999px;font-weight:800;display:none;z-index:120;font-size:14px}
+#adbox{text-align:center}
+#adprog{height:14px;background:#eee;border-radius:99px;overflow:hidden;border:2px solid #3a2a1a;margin:10px 0}
+#adbar{height:100%;width:0;background:#7fb069}
+@media (prefers-reduced-motion:reduce){.prod.pop{animation:none}}
+#verify{font-size:11px;background:#222;color:#cfc;padding:8px 10px;white-space:pre-wrap}
+</style>
+</head>
+<body>
+<div id="wrap">
+  <div id="topbar">
+    <div class="pill">🪙 <span id="coins">0</span></div>
+    <div class="pill">📦 <span id="cap">0/60</span></div>
+    <div class="pill" id="eraPill">1990</div>
+    <button class="iconbtn on" id="sndBtn" title="Tunog">🔊</button>
+    <button class="iconbtn" id="motionBtn" title="Bawas galaw">🏃</button>
+  </div>
+  <div id="stage">
+    <canvas id="game" width="480" height="360"></canvas>
+    <div id="bubble"></div>
+  </div>
+  <div id="orderPanel">
+    <h3>🧺 <span id="custName">Maghintay ng customer…</span></h3>
+    <div id="tray"><span class="note">Pindutin ang produkto sa ibaba para ihanda ang order.</span></div>
+    <div id="serveRow">
+      <button class="bigbtn" id="serveBtn">Ibigay 🧾</button>
+      <button class="bigbtn" id="clearBtn">Alisin</button>
+    </div>
+  </div>
+  <div id="shelf"></div>
+  <div class="sheet act" id="sh-tindahan">
+    <h2>🏪 Tindahan</h2>
+    <div class="note">Pumili ng produkto sa istante sa taas. Ang coins ay <b>game currency lang</b> — hindi na-ca-cash out. Hindi pambili ng stock ang coins; pang-upgrade, unlock, staff, palamuti at damit lang.</div>
+    <div id="shopInfo"></div>
+  </div>
+  <div class="sheet" id="sh-delivery">
+    <h2>🚚 Delivery</h2>
+    <div class="card"><b>📦 Libreng Daily Delivery</b> (Asia/Manila, 1×/araw)<br>
+      <span id="dailyInfo" class="note"></span><br><br>
+      <div class="row"><button class="btn green" id="claimBtn">Claim Free Delivery</button>
+      <button class="btn" id="claimAdBtn">📺 Watch Ad — Claim +6 Bonus</button></div>
+      <div class="note">Demo Ad pa lang (hindi tunay na kita). Bonus ay eksaktong +6 kapag natapos ang ad.</div>
+    </div>
+    <div class="card"><b>📺 Extra stock (Rewarded Ad, +6 bawat panood)</b><br>
+      <span class="note">Pumili ng bundle bago manood. Reward pagkatapos ng ad. Kapag ni-close/skip, walang reward.</span>
+      <div class="row" style="margin-top:8px"><select id="adBundle" style="flex:1;min-height:48px;border-radius:12px;border:2px solid #3a2a1a;font-weight:800"></select>
+      <button class="btn" id="watchAdBtn">Manood (Demo Ad)</button></div>
+    </div>
+    <div class="card"><b>💎 Stock Packs (bayad)</b><br><span class="note">Demo-only — walang tunay na bayad na nakakabit. Hindi ito investment o pagkakakitaan.</span>
+      <div class="row" style="margin-top:8px">
+        <button class="btn ghost" id="pack1">Maliit ₱29 · 12 halo (DEMO)</button>
+        <button class="btn ghost" id="pack2">Malaki ₱99 · 40 halo (DEMO)</button>
+      </div>
+    </div>
+    <div class="card"><b>📥 Delivery box (sobra)</b><div id="dbox" class="note"></div>
+      <div class="row"><button class="btn ghost" id="stashBtn">Ilipat ang kasya sa istante</button></div>
+    </div>
+  </div>
+  <div class="sheet" id="sh-upgrades">
+    <h2>🛠️ Upgrades</h2>
+    <div id="upg"></div>
+  </div>
+  <div class="sheet" id="sh-character">
+    <h2>🧍 Character</h2>
+    <div id="charPane"></div>
+  </div>
+  <div id="tabs">
+    <button data-s="tindahan" class="act">🏪 Tindahan</button>
+    <button data-s="delivery">🚚 Delivery</button>
+    <button data-s="upgrades">🛠️ Upgrades</button>
+    <button data-s="character">🧍 Character</button>
+  </div>
+  <div id="verify"></div>
+</div>
+
+<!-- STORY -->
+<div class="modal open" id="storyM"><div class="box">
+  <h1>🎬 Tiny Tindahan <small style="font-size:13px">· 1990</small></h1>
+  <div class="storyImg" id="storyImg">🛒</div>
+  <p id="storyTxt" style="font-size:15px;min-height:88px"></p>
+  <div class="row"><button class="btn ghost" id="skipStory">Skip ⏭</button>
+  <button class="btn ghost" id="replayStory">↺ Replay Story</button>
+  <button class="btn green" id="nextStory">Susunod ➜</button></div>
+  <div class="note">Maikling kuwento na puwedeng i-skip. May Replay sa Character tab.</div>
+</div></div>
+
+<!-- CHARACTER SELECT -->
+<div class="modal" id="charM"><div class="box">
+  <h1>🧍 Piliin ang tindero/tindera</h1>
+  <label class="note">Pangalan</label><input type="text" id="pname" maxlength="14" value="Apo">
+  <div id="charOpts"></div>
+  <div class="row" style="margin-top:10px"><button class="btn green" id="startBtn">Magsimula sa 1990 🎉</button></div>
+  <div class="note">Ibang hiwa ng damit sa bawat era (hindi recolor lang): 1990 baro/tsinelas → 2000 polo → 2010 tee+apron → 2026 modern polo+apron.</div>
+</div></div>
+
+<!-- DEMO AD -->
+<div class="modal" id="adM"><div class="box" id="adbox">
+  <h1>📺 Demo Ad</h1>
+  <p class="note">Hindi ito tunay na ad / walang kinikita. Tapusin para makuha ang eksaktong +6.</p>
+  <div style="font-size:54px">🥤✨🍪</div>
+  <p><b>Sari-sari saya! Bili na!</b></p>
+  <div id="adprog"><div id="adbar"></div></div>
+  <div class="row"><button class="btn ghost" id="closeAd">Isara (walang reward)</button>
+  <button class="btn green" id="finishAd" disabled>Tapusin (0s)</button></div>
+</div></div>
+
+<div id="toast"></div>
+
+<script>
+"use strict";
+/* ============ DATA ============ */
+const PRODUCTS=[
+ {id:"pompoms",n:"Pompoms",c1:"#e8402a",c2:"#ffb52e",price:8,era:1990,kind:"packet",d:"Cheese curls"},
+ {id:"sweetcorn",n:"Sweet Corn",c1:"#f7c948",c2:"#3f9e4d",price:7,era:1990,kind:"packet",d:"Mais"},
+ {id:"bangus",n:"Sizzling Bangus",c1:"#2e9bd6",c2:"#ffffff",price:9,era:1990,kind:"packet",d:"Bangus chichirya"},
+ {id:"lumpia",n:"Lumpia",c1:"#c97b2d",c2:"#ffe1a8",price:10,era:1990,kind:"packet",d:"Lumpiang shanghai snack"},
+ {id:"chocnut",n:"Choc Nut",c1:"#6b3b1f",c2:"#f5c86e",price:5,era:1990,kind:"packet",d:"Mani-choco"},
+ {id:"sarsi",n:"Sarsi",c1:"#3b1c1c",c2:"#e8402a",price:12,era:1990,kind:"bottle",d:"Bottled sarsaparilla"},
+ {id:"basta",n:"Basta Pinoy",c1:"#1d6fb8",c2:"#ffdf3e",price:8,era:2000,kind:"packet"},
+ {id:"aiza",n:"Aiza",c1:"#e86fb0",c2:"#fff",price:7,era:2000,kind:"packet"},
+ {id:"lechon",n:"Lechon Manok",c1:"#b3541e",c2:"#ffd07a",price:11,era:2000,kind:"packet"},
+ {id:"kentucky",n:"Kentucky",c1:"#d42a2a",c2:"#fff",price:11,era:2000,kind:"packet"},
+ {id:"piknik",n:"Piknik",c1:"#2e9e44",c2:"#fff59d",price:9,era:2010,kind:"packet"},
+ {id:"yamyam",n:"Yamyam",c1:"#7b4fd0",c2:"#ffd1ec",price:8,era:2010,kind:"packet"},
+ {id:"icedgem",n:"Iced Gem",c1:"#f49ac1",c2:"#fff",price:6,era:2010,kind:"jar"},
+ {id:"dipsea",n:"Dip Sea",c1:"#1f8a8a",c2:"#c8fff4",price:9,era:2010,kind:"cup"},
+ {id:"pusit",n:"Vinegar Pusit",c1:"#5b3b8c",c2:"#cfe08a",price:10,era:2026,kind:"packet"},
+ {id:"clover",n:"Clover Bits",c1:"#3f9e4d",c2:"#fff",price:8,era:2026,kind:"packet"},
+ {id:"tomi",n:"Tomi",c1:"#ff7b1c",c2:"#ffe1a8",price:8,era:2026,kind:"packet"},
+ {id:"kobi",n:"Kobi",c1:"#4d2c1a",c2:"#ffb52e",price:9,era:2026,kind:"packet"},
+ {id:"halo",n:"Halo-halo",c1:"#b678e8",c2:"#fff",price:15,era:2026,kind:"cup"},
+ {id:"rinbee",n:"Rin-Bee",c1:"#e8402a",c2:"#fff59d",price:8,era:2026,kind:"packet"},
+ {id:"choko",n:"Choko-Choko",c1:"#4d2c1a",c2:"#ff8fb0",price:7,era:2026,kind:"packet"},
+ {id:"cheers",n:"Cheers",c1:"#2e9bd6",c2:"#ffdf3e",price:12,era:2026,kind:"bottle"},
+];
+const ERAS=[1990,2000,2010,2026];
+const SHOPLV=[{n:"Karo ni Lola (pushcart)",cap:60,cost:0},{n:"Sari-sari Store",cap:90,cost:150},{n:"Malaking Tindahan",cap:140,cost:400},{n:"Talipapa Stalls",cap:220,cost:900}];
+const LINES={
+ req:["Pabili po ng {o}! 🙏","Ate/Kuya, pahingi pong {o} 😋","Nakakamiss 'to! {o} nga po.","Pang-merienda lang po, {o} please!","Sarap nito noong bata ako — {o} nga!","Pasalubong ko po: {o} 😄"],
+ thanks:["Salamat po! Babalik ako! 😊","Sarap! Sulit! 👍","Ayos! Ingat po! 👋","Sakto sa merienda! 🥰","Salamat, suki na ako! ❤️"],
+ browse:["Tingin-tingin lang po muna… 👀","Uy, dami n'yong bago! 😮","Naalala ko si Lola dito… 🥹","Kamusta po? Mainit ngayon no? ☀️"],
+ nostock:["Ay, ubos na pala… bukas na lang! 🥲","Sayang! Next time na lang po."]
+};
+const CUSTS=[
+ {id:"junjun",n:"Jun-jun",d:"Bata · 8 y/o",skin:"#f2b880",hair:"#2b2118",hs:"buzz",cloth:"#e8402a",h:0.72},
+ {id:"mika",n:"Mika",d:"Estudyante",skin:"#e8a06e",hair:"#4d2c1a",hs:"pigtail",cloth:"#2e9bd6",h:0.85},
+ {id:"nena",n:"Aling Nena",d:"Suki · 62 y/o",skin:"#d99a63",hair:"#cfcfcf",hs:"bun",cloth:"#7b4fd0",h:0.95},
+ {id:"boy",n:"Mang Boy",d:"Karpintero",skin:"#c98a5a",hair:"#1c1c1c",hs:"cap",cloth:"#3f9e4d",h:1.05},
+ {id:"pilo",n:"Tatay Pilo",d:"Lolo · 70 y/o",skin:"#d99a63",hair:"#eeeeee",hs:"thin",cloth:"#a9743c",h:0.98},
+ {id:"liza",n:"Liza",d:"Nanay",skin:"#f2b880",hair:"#5b2c14",hs:"long",cloth:"#e86fb0",h:1.0},
+ {id:"drix",n:"Kuya Drix",d:"Tricycle driver",skin:"#c98a5a",hair:"#1c1c1c",hs:"short",cloth:"#ffdf3e",h:1.08},
+];
+const SKINS=["#f7c9a0","#f2b880","#e8a06e","#d99a63","#c98a5a","#a06a3b"];
+const HAIRS=["#1c1c1c","#4d2c1a","#7a4a1e","#cfcfcf","#5b2c14","#2b2118"];
+const HSTYLES=["short","buzz","long","bun","pigtail","cap","thin"];
+const CLOTHES90=["Baro't Tsinelas","Daster 90s","Polo Barong","Palda't Blusa"];
+const CLOTHESNEW=["Polo 2000","Tee + Apron","Modern Polo","Talipapa Vest"];
+/* ============ STATE ============ */
+const KEY="tinyTindahan_v1";
+let S;
+function defState(){const stock={};["pompoms","sweetcorn","bangus","lumpia","chocnut","sarsi"].forEach(k=>stock[k]=8);
+ return {coins:40,stock,dbox:{},shop:0,unlocked:["pompoms","sweetcorn","bangus","lumpia","chocnut","sarsi"],
+ staff:0,decor:0,eraIdx:0,seenStory:false,char:{name:"Apo",skin:1,hair:1,hs:0,cloth:0,body:1},
+ lastClaim:"",muted:false,vol:0.7,reduced:false,sales:0};}
+function load(){try{const r=localStorage.getItem(KEY);if(r){S=Object.assign(defState(),JSON.parse(r));return;}}catch(e){}S=defState();}
+function save(){try{localStorage.setItem(KEY,JSON.stringify(S));}catch(e){}}
+function manilaDate(){try{return new Intl.DateTimeFormat("en-CA",{timeZone:"Asia/Manila",year:"numeric",month:"2-digit",day:"2-digit"}).format(new Date());}catch(e){const d=new Date(Date.now()+8*3600e3);return d.toISOString().slice(0,10);}}
+function capacity(){return SHOPLV[S.shop].cap;}
+function totalStock(){return Object.values(S.stock).reduce((a,b)=>a+(b|0),0);}
+function freeAmt(){return Math.round(capacity()/2);}
+function prod(id){return PRODUCTS.find(p=>p.id===id);}
+function unlockedList(){return PRODUCTS.filter(p=>S.unlocked.includes(p.id));}
+/* ============ AUDIO (original) ============ */
+let AC=null,musicNodes=null;
+function ac(){if(!AC){AC=new (window.AudioContext||window.webkitAudioContext)();}if(AC.state==="suspended")AC.resume();return AC;}
+function beep(f,d,type,g){if(S.muted)return;try{const c=ac(),o=c.createOscillator(),v=c.createGain();o.type=type||"sine";o.frequency.value=f;v.gain.value=(g||0.2)*S.vol;o.connect(v);v.connect(c.destination);o.start();v.gain.exponentialRampToValueAtTime(0.001,c.currentTime+d);o.stop(c.currentTime+d);}catch(e){}}
+const sfx={
+ coin(){beep(880,.12,"square",.12);setTimeout(()=>beep(1320,.18,"square",.12),90);},
+ pop(){beep(520,.08,"triangle",.2);},
+ buy(){beep(660,.1,"triangle",.2);setTimeout(()=>beep(880,.14,"triangle",.2),110);},
+ box(){beep(300,.15,"sawtooth",.1);setTimeout(()=>beep(420,.15,"sawtooth",.1),130);},
+ err(){beep(180,.25,"sawtooth",.15);},
+ step(){beep(200,.05,"sine",.05);}
+};
+function startMusic(){if(musicNodes||S.muted)return;try{const c=ac();
+ const g=c.createGain();g.gain.value=0.10*S.vol;g.connect(c.destination);
+ const notes=[523,587,659,784,880,784,659,587,523,440,523,587];let i=0;
+ const t=setInterval(()=>{if(S.muted||document.hidden)return;const o=c.createOscillator(),v=c.createGain();
+  o.type="triangle";o.frequency.value=notes[i%notes.length];v.gain.value=0.5;
+  o.connect(v);v.connect(g);o.start();v.gain.exponentialRampToValueAtTime(0.001,c.currentTime+0.6);o.stop(c.currentTime+0.65);i++;},620);
+ musicNodes={g,t};}catch(e){}}
+function stopMusic(){if(musicNodes){clearInterval(musicNodes.t);try{musicNodes.g.disconnect();}catch(e){}musicNodes=null;}}
+document.addEventListener("visibilitychange",()=>{if(document.hidden)stopMusic();else if(!S.muted)startMusic();});
+["pointerdown","touchstart"].forEach(e=>document.addEventListener(e,function once(){startMusic();},{once:true}));
+/* ============ CANVAS SCENE ============ */
+const cv=document.getElementById("game"),ctx=cv.getContext("2d");
+let t0=performance.now(),walkT=0;
+let queue=[]; // {cust, x, tx, state:'in'|'order'|'leaving', phase, order:[ids], line}
+let flyItems=[]; // {id, x0,y0,x1,y1,t}
+let tray=[]; // selected ids
+let spawnT=0, activeCust=null;
+const reducedPref=matchMedia("(prefers-reduced-motion: reduce)").matches;
+if(reducedPref)S&&(S.reduced=true);
+function R(a,b){return a+Math.random()*(b-a);}
+function sway(){return (S&&S.reduced)?0:1;}
+function drawPerson(x,y,s,o,phase,mode){
+ // s scale, o {skin,hair,hs,cloth}, phase walk cycle, mode walk|idle
+ ctx.save();ctx.translate(x,y);ctx.scale(s,s);
+ const bob=(mode==="walk"?Math.abs(Math.sin(phase))*3*sway():Math.sin(phase*0.5)*1.2*sway());
+ ctx.translate(0,-bob);
+ const legSwing=mode==="walk"?Math.sin(phase)*14*sway():0;
+ const armSwing=mode==="walk"?Math.sin(phase+Math.PI)*12*sway():Math.sin(phase*0.5)*3*sway();
+ ctx.lineCap="round";
+ // shadow
+ ctx.fillStyle="#0003";ctx.beginPath();ctx.ellipse(0,2,16,5,0,0,7);ctx.fill();
+ // legs (proper two-segment walking)
+ [[-6,legSwing],[6,-legSwing]].forEach(([lx,sw])=>{
+  ctx.strokeStyle="#3a3a5a";ctx.lineWidth=7;
+  ctx.beginPath();ctx.moveTo(lx,-42);
+  ctx.lineTo(lx+sw*0.5,-22);ctx.lineTo(lx+sw,-2);ctx.stroke();
+  ctx.fillStyle="#5b3a1e";ctx.fillRect(lx+sw-6,-6,12,6); // tsinelas
+ });
+ // torso (clothing shape varies by outfit)
+ ctx.fillStyle=o.cloth;
+ if((o.outfit||"").includes("Daster")||(o.outfit||"").includes("Palda")){ctx.beginPath();ctx.moveTo(-14,-84);ctx.lineTo(14,-84);ctx.lineTo(20,-42);ctx.lineTo(-20,-42);ctx.closePath();ctx.fill();}
+ else if((o.outfit||"").includes("Vest")||(o.outfit||"").includes("Apron")){ctx.fillRect(-13,-84,26,42);ctx.fillStyle="#00000022";ctx.fillRect(-13,-84,26,12);}
+ else{ctx.fillRect(-13,-84,26,42);}
+ ctx.strokeStyle="#3a2a1a";ctx.lineWidth=2;ctx.strokeRect(-13,-84,26,42);
+ // arms with swing
+ [[-15,armSwing],[15,-armSwing]].forEach(([ax,sw])=>{
+  ctx.strokeStyle=o.skin;ctx.lineWidth=6;
+  ctx.beginPath();ctx.moveTo(ax,-78);ctx.lineTo(ax+sw*0.4,-58);ctx.lineTo(ax+sw,-44);ctx.stroke();
+  ctx.fillStyle=o.skin;ctx.beginPath();ctx.arc(ax+sw,-42,4.5,0,7);ctx.fill();
+ });
+ // head
+ ctx.fillStyle=o.skin;ctx.beginPath();ctx.arc(0,-98,14,0,7);ctx.fill();
+ ctx.strokeStyle="#3a2a1a";ctx.lineWidth=1.5;ctx.stroke();
+ // eyes/smile
+ ctx.fillStyle="#222";ctx.fillRect(-7,-100,3,4);ctx.fillRect(4,-100,3,4);
+ ctx.strokeStyle="#7a3a1a";ctx.beginPath();ctx.arc(0,-94,5,0.2,Math.PI-0.2);ctx.stroke();
+ // hair styles (visibly different)
+ ctx.fillStyle=o.hair;
+ if(o.hs==="buzz"){ctx.beginPath();ctx.arc(0,-100,14,Math.PI,0);ctx.fill();}
+ else if(o.hs==="long"){ctx.fillRect(-15,-112,30,34);ctx.beginPath();ctx.arc(0,-100,14,Math.PI,0);ctx.fill();}
+ else if(o.hs==="bun"){ctx.beginPath();ctx.arc(0,-100,14,Math.PI,0);ctx.fill();ctx.beginPath();ctx.arc(0,-116,7,0,7);ctx.fill();}
+ else if(o.hs==="pigtail"){ctx.beginPath();ctx.arc(0,-100,14,Math.PI,0);ctx.fill();ctx.beginPath();ctx.arc(-16,-96,5,0,7);ctx.arc(16,-96,5,0,7);ctx.fill();}
+ else if(o.hs==="cap"){ctx.fillStyle="#d42a2a";ctx.fillRect(-14,-114,28,10);ctx.fillRect(-14,-106,8,6);ctx.fillStyle=o.hair;ctx.fillRect(-12,-100,5,8);ctx.fillRect(7,-100,5,8);}
+ else if(o.hs==="thin"){ctx.strokeStyle=o.hair;ctx.lineWidth=3;ctx.beginPath();ctx.arc(0,-100,14,Math.PI*1.05,Math.PI*1.95);ctx.stroke();}
+ else{ctx.beginPath();ctx.arc(0,-102,14,Math.PI*0.95,Math.PI*2.05);ctx.fill();ctx.fillRect(-14,-104,28,6);}
+ ctx.restore();
+}
+function drawPacket(x,y,p,sw,scale){
+ ctx.save();ctx.translate(x,y);ctx.rotate(sw*0.12);ctx.scale(scale||1,scale||1);
+ ctx.fillStyle=p.c1;ctx.strokeStyle="#3a2a1a";ctx.lineWidth=2;
+ ctx.beginPath();ctx.moveTo(-14,-18);ctx.lineTo(14,-18);ctx.lineTo(11,18);ctx.lineTo(-11,18);ctx.closePath();ctx.fill();ctx.stroke();
+ ctx.fillStyle=p.c2;ctx.fillRect(-14,-18,28,9);
+ ctx.fillStyle="#fff";ctx.font="bold 7px sans-serif";ctx.textAlign="center";
+ const nm=p.n.length>9?p.n.slice(0,9):p.n;ctx.fillText(nm,0,2);
+ ctx.fillStyle="#ffffffcc";ctx.fillRect(-9,-8,4,20);
+ ctx.restore();
+}
+function drawBottle(x,y,p,sw,scale){
+ ctx.save();ctx.translate(x,y);ctx.rotate(sw*0.08);ctx.scale(scale||1,scale||1);
+ ctx.fillStyle=p.c1;ctx.strokeStyle="#3a2a1a";ctx.lineWidth=2;
+ ctx.fillRect(-4,-26,8,8);ctx.beginPath();ctx.moveTo(-4,-18);ctx.lineTo(-8,14);ctx.lineTo(8,14);ctx.lineTo(4,-18);ctx.closePath();ctx.fill();ctx.stroke();
+ ctx.fillStyle=p.c2;ctx.fillRect(-8,2,16,8);
+ ctx.fillStyle="#fff";ctx.font="bold 6px sans-serif";ctx.textAlign="center";ctx.fillText(p.n.slice(0,6),0,8);
+ ctx.restore();
+}
+function scene(now){
+ const dt=Math.min(0.05,(now-t0)/1000);t0=now;walkT+=dt*(S&&S.reduced?0:1);
+ const W=480,H=360,era=ERAS[S?S.eraIdx:0]||1990,modern=S?S.shop:0;
+ // sky
+ const g=ctx.createLinearGradient(0,0,0,H);g.addColorStop(0,"#8fd0ff");g.addColorStop(.6,"#cfeeff");g.addColorStop(.6,"#a8d89a");g.addColorStop(1,"#7fb069");
+ ctx.fillStyle=g;ctx.fillRect(0,0,W,H);
+ // sun + clouds
+ ctx.fillStyle="#ffdf5e";ctx.beginPath();ctx.arc(400,52,26,0,7);ctx.fill();
+ ctx.fillStyle="#ffffffcc";
+ const cx=(walkT*8)%560-40;
+ [[cx,60],[cx+200,44],[cx+380,70]].forEach(([x,y])=>{ctx.beginPath();ctx.ellipse(x,y,34,12,0,0,7);ctx.ellipse(x+22,y+3,26,10,0,0,7);ctx.fill();});
+ // houses: kubo -> concrete
+ function house(x,eraM,flip){
+  ctx.save();ctx.translate(x,0);if(flip)ctx.scale(-1,1);
+  if(era<2000){ctx.fillStyle="#8a5a2b";ctx.fillRect(-52,150,104,60);ctx.strokeStyle="#5b3a1e";ctx.lineWidth=3;ctx.strokeRect(-52,150,104,60);
+   for(let i=0;i<4;i++){ctx.beginPath();ctx.moveTo(-52+i*26,150);ctx.lineTo(-52+i*26,210);ctx.stroke();}
+   ctx.fillStyle="#c98a3b";ctx.beginPath();ctx.moveTo(-62,150);ctx.lineTo(0,108);ctx.lineTo(62,150);ctx.closePath();ctx.fill();ctx.stroke();
+   ctx.fillStyle="#6b3b1f";ctx.fillRect(-14,176,28,34);}
+  else{const c=era>=2026?"#f2f2f2":era>=2010?"#ffe1b8":"#e8d9b8";
+   ctx.fillStyle=c;ctx.fillRect(-56,140,112,70);ctx.strokeStyle="#5b5b5b";ctx.lineWidth=3;ctx.strokeRect(-56,140,112,70);
+   ctx.fillStyle=era>=2026?"#2e9bd6":"#b3541e";ctx.fillRect(-56,140,112,16);
+   ctx.fillStyle="#7fb069";ctx.fillRect(-40,165,24,20);ctx.fillRect(16,165,24,20);
+   ctx.fillStyle="#6b3b1f";ctx.fillRect(-12,178,24,32);}
+  ctx.restore();}
+ house(70,era,false);house(410,era>=2000?1:0,true);
+ // nearby store + radio
+ ctx.fillStyle="#a9743c";ctx.fillRect(330,170,110,60);ctx.fillStyle="#ffdf9e";ctx.fillRect(336,176,98,22);
+ ctx.fillStyle="#3a2a1a";ctx.font="bold 11px sans-serif";ctx.textAlign="center";ctx.fillText(era>=2010?"MINI MART 📻":"TINDAHAN 📻",385,191);
+ ctx.fillStyle="#222";ctx.fillRect(372,196,26,16);ctx.fillStyle="#7fb069";ctx.fillRect(374,198,22,4);
+ if(!S.muted){ctx.font="14px sans-serif";const n=Math.sin(walkT*3)*3*sway();ctx.fillText("🎵",360,196+n);ctx.fillText("🎶",404,200-n);}
+ // trees + swaying leaves
+ [[150,"#2e7d32"],[270,"#388e3c"]].forEach(([x,c],ti)=>{
+  ctx.fillStyle="#6b3b1f";ctx.fillRect(x-6,170,12,50);
+  ctx.fillStyle=c;const s1=Math.sin(walkT*1.6+ti)*4*sway();
+  ctx.beginPath();ctx.arc(x+s1,140,30,0,7);ctx.arc(x-20+s1,155,22,0,7);ctx.arc(x+20+s1,155,22,0,7);ctx.fill();
+  ctx.fillStyle="#7fd67f";for(let i=0;i<5;i++){const lx=x-24+i*12+Math.sin(walkT*2+i+ti)*4*sway();ctx.beginPath();ctx.ellipse(lx,132+((i*37)%18),6,3,0.5,0,7);ctx.fill();}
+ });
+ // bamboo fence (1990) vs concrete (later)
+ ctx.strokeStyle=era<2000?"#8a7a3b":"#999";ctx.lineWidth=4;
+ for(let x=10;x<470;x+=24){ctx.beginPath();ctx.moveTo(x,196);ctx.lineTo(x,222);ctx.stroke();}
+ ctx.lineWidth=3;ctx.beginPath();ctx.moveTo(0,204);ctx.lineTo(480,204);ctx.stroke();
+ // road dirt->paved
+ ctx.fillStyle=era<2000?"#c9a06a":era<2010?"#9a9a9a":"#555";ctx.fillRect(0,222,480,60);
+ if(era>=2000){ctx.fillStyle="#fff";for(let x=((walkT*0)%60);x<480;x+=60)ctx.fillRect(x,248,30,4);}
+ else{ctx.fillStyle="#00000018";for(let i=0;i<20;i++)ctx.fillRect((i*67)%480,228+((i*29)%44),10,4);}
+ // CART / SHOP
+ const cartX=240,cartY=300;
+ const bounce=Math.sin(walkT*2)*1.5*sway();
+ ctx.save();ctx.translate(cartX,cartY+bounce);
+ const lvl=S?S.shop:0;
+ if(lvl===0){
+  ctx.fillStyle="#8a5a2b";ctx.strokeStyle="#5b3a1e";ctx.lineWidth=3;
+  ctx.fillRect(-90,-46,180,44);ctx.strokeRect(-90,-46,180,44);
+  for(let i=0;i<6;i++){ctx.beginPath();ctx.moveTo(-90+i*30,-46);ctx.lineTo(-90+i*30,-2);ctx.stroke();}
+  // wheels rotate
+  const wr=walkT*0.5;
+  [[-60,8],[60,8]].forEach(([wx,wy])=>{ctx.fillStyle="#3a2a1a";ctx.beginPath();ctx.arc(wx,wy,14,0,7);ctx.fill();
+   ctx.strokeStyle="#c9a06a";ctx.lineWidth=3;for(let a=0;a<4;a++){ctx.beginPath();ctx.moveTo(wx,wy);ctx.lineTo(wx+Math.cos(wr+a*Math.PI/2)*12,wy+Math.sin(wr+a*Math.PI/2)*12);ctx.stroke();}});
+  // canopy flutter
+  ctx.fillStyle="#e8402a";ctx.beginPath();ctx.moveTo(-100,-46);
+  for(let x=0;x<=200;x+=20)ctx.lineTo(-100+x,-66+Math.sin(walkT*3+x*0.1)*4*sway());
+  ctx.lineTo(100,-46);ctx.closePath();ctx.fill();ctx.stroke();
+  ctx.fillStyle="#fff";ctx.font="bold 10px sans-serif";ctx.textAlign="center";ctx.fillText("★ TINDAHAN ★",0,-52);
+  // posts
+  ctx.fillStyle="#5b3a1e";ctx.fillRect(-94,-46,6,44);ctx.fillRect(88,-46,6,44);
+ }else{
+  const w=lvl>=3?220:170;
+  ctx.fillStyle=lvl>=3?"#ffdf9e":"#d9a45b";ctx.fillRect(-w/2,-110,w,108);ctx.strokeStyle="#5b3a1e";ctx.lineWidth=4;ctx.strokeRect(-w/2,-110,w,108);
+  ctx.fillStyle=lvl>=3?"#2e9bd6":"#b3541e";ctx.fillRect(-w/2,-110,w,22);
+  ctx.fillStyle="#fff";ctx.font="bold 12px sans-serif";ctx.textAlign="center";
+  ctx.fillText(lvl>=3?"★ TALIPAPA ★":lvl===2?"MALAKING TINDAHAN":"SARI-SARI STORE",0,-92);
+  ctx.fillStyle="#6b3b1f";ctx.fillRect(-w/2+14,-40,w-28,38);
+  ctx.fillStyle="#00000033";ctx.fillRect(-w/2+14,-40,w-28,10);
+ }
+ // handwritten price sign
+ ctx.fillStyle="#fff8dc";ctx.strokeStyle="#3a2a1a";ctx.lineWidth=2;
+ ctx.save();ctx.rotate(Math.sin(walkT*1.4)*0.03*sway());ctx.fillRect(-150,-70,64,36);ctx.strokeRect(-150,-70,64,36);
+ ctx.fillStyle="#b3541e";ctx.font="bold 9px sans-serif";ctx.textAlign="center";ctx.fillText("PRESYO:",-118,-58);ctx.fillText("₱5–₱15",-118,-47);ctx.restore();
+ // hanging packets sway + jars + bottles on cart
+ const show=unlockedList().slice(0,10);
+ show.forEach((p,i)=>{
+  const hx=-80+i*17,sw=Math.sin(walkT*1.8+i*0.9)*sway();
+  if(p.kind==="bottle")drawBottle(hx,-16,p,sw,0.9);
+  else drawPacket(hx,-24,p,sw,0.85);
+ });
+ // candy jars
+ [0,1].forEach(i=>{const jx=-40+i*80;ctx.fillStyle="#ffffffaa";ctx.strokeStyle="#3a2a1a";ctx.lineWidth=2;
+  ctx.beginPath();ctx.ellipse(jx,-12,14,12,0,0,7);ctx.fill();ctx.stroke();
+  ctx.fillStyle="#e86fb0";for(let k=0;k<5;k++)ctx.fillRect(jx-9+k*4,-16+((k*5)%8),3,3);});
+ if(S&&S.decor>0){ctx.font="20px sans-serif";ctx.fillText("🪴",-120,-80+Math.sin(walkT*2)*2*sway());ctx.fillText("🪴",140,-60);if(S.decor>1)ctx.fillText("🎏",-140,-60);}
+ ctx.restore();
+ // vendor (player) behind cart
+ if(S){const c=S.char;drawPerson(cartX-20,cartY+34,0.62,{skin:SKINS[c.skin%6],hair:HAIRS[c.hair%6],hs:HSTYLES[c.hs%7],cloth:"#7fb069",outfit:outfitName()},walkT*2,"idle");
+  ctx.fillStyle="#3a2a1a";ctx.font="bold 11px sans-serif";ctx.textAlign="center";
+  const nm=c.name;const w=ctx.measureText(nm).width+12;
+  ctx.fillStyle="#fff8ec";ctx.strokeStyle="#3a2a1a";ctx.lineWidth=2;
+  ctx.beginPath();ctx.roundRect(240-w/2,344,w,20,8);ctx.fill();ctx.stroke();
+  ctx.fillStyle="#3a2a1a";ctx.fillText(nm,240,358);
+  if(S.staff>0){drawPerson(cartX+90,cartY+34,0.55,{skin:"#e8a06e",hair:"#1c1c1c",hs:"short",cloth:"#ffdf3e",outfit:"Staff Vest"},walkT*2,"idle");
+   ctx.fillText("Staff",cartX+90,cartY+40);}}
+ // customers
+ queue.forEach(q=>{
+  const mode=q.state==="order"?"idle":"walk";
+  drawPerson(q.x,292,q.cust.h*0.62,{skin:q.cust.skin,hair:q.cust.hair,hs:q.cust.hs,cloth:q.cust.cloth,outfit:q.cust.d},q.phase,mode);
+  ctx.font="bold 10px sans-serif";ctx.textAlign="center";
+  const nw=ctx.measureText(q.cust.n).width+10;
+  ctx.fillStyle="#ffffffee";ctx.strokeStyle="#3a2a1a";ctx.lineWidth=1.5;
+  ctx.beginPath();ctx.roundRect(q.x-nw/2,318,nw,17,7);ctx.fill();ctx.stroke();
+  ctx.fillStyle="#3a2a1a";ctx.fillText(q.cust.n,q.x,331);
+ });
+ // flying items
+ flyItems=flyItems.filter(f=>f.t<1);
+ flyItems.forEach(f=>{f.t+=dt*1.6;const x=f.x0+(f.x1-f.x0)*f.t,y=f.y0+(f.y1-f.y0)*f.t-Math.sin(f.t*Math.PI)*60;
+  drawPacket(x,y,prod(f.id),0,1);});
+ update(dt);
+ requestAnimationFrame(scene);
+}
+function outfitName(){if(!S)return "";const e=S.eraIdx;const c=S.char.cloth;
+ if(e===0)return CLOTHES90[c%4];if(e===1)return CLOTHESNEW[0];if(e===2)return CLOTHESNEW[1];return CLOTHESNEW[(c%2)+2];}
+/* ============ GAME LOOP ============ */
+function update(dt){
+ // spawn
+ spawnT-=dt;
+ const want=queue.length<3&&totalStock()>0;
+ if(spawnT<=0&&want&&!document.getElementById("storyM").classList.contains("open")){
+  spawnT=R(3,6);
+  const c=CUSTS[Math.floor(Math.random()*CUSTS.length)];
+  // order: 1-3 items, prefer in-stock, must match dialogue
+  const avail=Object.keys(S.stock).filter(k=>S.stock[k]>0&&S.unlocked.includes(k));
+  if(avail.length){
+   const n=Math.min(avail.length,1+Math.floor(Math.random()*3));
+   const order=[];const cp=[...avail];
+   for(let i=0;i<n;i++)order.push(cp.splice(Math.floor(Math.random()*cp.length),1)[0]);
+   const fromLeft=Math.random()<0.5;
+   const slot=queue.length;
+   queue.push({cust:c,x:fromLeft?-30:510,tx:170+slot*70,state:"in",phase:R(0,6),order,line:pickLine(order),fromLeft});
+   sfx.step();
+  }
+ }
+ // move
+ queue.forEach((q,i)=>{
+  q.tx=170+i*70;
+  if(q.state==="in"){q.phase+=dt*9;const d=q.tx-q.x;
+   if(Math.abs(d)<4){q.x=q.tx;q.state="order";if(i===0)showOrder(q);}else q.x+=Math.sign(d)*Math.min(Math.abs(d),90*dt);}
+  else if(q.state==="leaving"){q.phase+=dt*9;q.x+=(q.fromLeft?1:-1)*-110*dt*-1;q.x+=((q.fromLeft?540:-60)-q.x)*dt*0.6;
+   if(q.x>530||q.x<-50)queue.splice(queue.indexOf(q),1);
+   if(activeCust===q&&q.gone){activeCust=null;hideBubble();}}
+ });
+ // bubble follows first ordering
+ const first=queue.find(q=>q.state==="order");
+ if(first&&first!==activeCust){activeCust=first;showOrder(first);}
+ if(!first){activeCust=null;}
+}
+function onames(ids){return ids.map(id=>prod(id).n).join(", ");}
+function pickLine(order){
+ const t=LINES.req[Math.floor(Math.random()*LINES.req.length)];
+ return t.replace("{o}",onames(order));
+}
+function showOrder(q){
+ document.getElementById("custName").textContent=q.cust.n+" ("+q.cust.d+") — nag-oorder";
+ const b=document.getElementById("bubble");b.style.display="block";
+ b.innerHTML="<b>"+q.cust.n+":</b> "+q.line+"<div class='orderRow'>"+q.order.map(id=>"<span class='trayItem'>"+prod(id).n+" ×"+(S.stock[id]|0)+"</span>").join("")+"</div>";
+ tray=[];renderTray();
+}
+function hideBubble(){document.getElementById("bubble").style.display="none";
+ document.getElementById("custName").textContent="Maghintay ng customer…";tray=[];renderTray();}
+/* ============ UI ============ */
+function toast(m){const t=document.getElementById("toast");t.textContent=m;t.style.display="block";clearTimeout(t._h);t._h=setTimeout(()=>t.style.display="none",2200);}
+function renderTop(){
+ document.getElementById("coins").textContent=S.coins;
+ document.getElementById("cap").textContent=totalStock()+"/"+capacity();
+ document.getElementById("eraPill").textContent=ERAS[S.eraIdx]+" · "+SHOPLV[S.shop].n.split(" ")[0];
+ document.getElementById("sndBtn").textContent=S.muted?"🔇":"🔊";
+ document.getElementById("motionBtn").textContent=S.reduced?"⏸️":"🏃";
+ const d=manilaDate(),can=d!==S.lastClaim;
+ document.getElementById("dailyInfo").textContent="Ngayon ("+d+"): libreng "+freeAmt()+" halo-halong stock ("+Math.round(freeAmt()/capacity()*100)+"% ng cap "+capacity()+"). "+(can?"Puwede pang i-claim.":"Na-claim na ngayong araw. Bukas ulit!");
+ document.getElementById("claimBtn").disabled=!can;
+ document.getElementById("claimAdBtn").disabled=!can;
+ document.getElementById("verify").textContent="verify: era="+ERAS[S.eraIdx]+" shop="+SHOPLV[S.shop].n+" cap="+capacity()+" stock="+totalStock()+" unlocked="+S.unlocked.length+" sales="+S.sales+" lastClaim="+ (S.lastClaim||"-") +" coins="+S.coins+" (game currency only)";
+ save();
+}
+function renderShelf(){
+ const el=document.getElementById("shelf");el.innerHTML="";
+ PRODUCTS.forEach(p=>{
+  const un=S.unlocked.includes(p.id),st=S.stock[p.id]|0;
+  const d=document.createElement("div");d.className="prod"+(tray.includes(p.id)?" sel":"")+(un?"":" locked");
+  d.innerHTML="<div class='pk' data-c1='"+p.c1+"' data-c2='"+p.c2+"' data-n='"+p.n+"' data-k='"+p.kind+"'></div><div class='nm'>"+p.n+"</div><div class='st'>"+(un?("📦 "+st):"🔒 "+p.era)+"</div><div class='pr'>₱"+p.price+" · 🪙</div>";
+  if(un)d.onclick=()=>{toggleTray(p.id);d.classList.remove("pop");void d.offsetWidth;d.classList.add("pop");sfx.pop();};
+  else d.onclick=()=>toast("🔒 I-unlock sa Upgrades ("+p.era+")");
+  el.appendChild(d);drawMini(d.querySelector(".pk"),p);
+ });
+ document.getElementById("shopInfo").innerHTML="<div class='card'>🏪 <b>"+SHOPLV[S.shop].n+"</b> · cap "+capacity()+" · staff "+S.staff+" · palamuti "+S.decor+"<br><span class='note'>Benta: "+S.sales+" · Era: "+ERAS[S.eraIdx]+"</span></div>";
+}
+function drawMini(el,p){
+ const c=document.createElement("canvas");c.width=64;c.height=48;el.appendChild(c);const x=c.getContext("2d");
+ x.fillStyle=p.c1;x.strokeStyle="#3a2a1a";x.lineWidth=2;
+ if(p.kind==="bottle"){x.fillStyle=p.c1;x.fillRect(26,4,12,10);x.beginPath();x.moveTo(26,14);x.lineTo(20,42);x.lineTo(44,42);x.lineTo(38,14);x.closePath();x.fill();x.stroke();x.fillStyle=p.c2;x.fillRect(20,26,24,9);x.fillStyle="#fff";x.font="bold 7px sans-serif";x.textAlign="center";x.fillText(p.n.slice(0,6),32,33);}
+ else if(p.kind==="cup"){x.fillStyle=p.c2;x.fillRect(18,18,28,22);x.strokeRect(18,18,28,22);x.fillStyle=p.c1;x.fillRect(18,12,28,8);x.fillStyle="#fff";x.font="bold 6px sans-serif";x.textAlign="center";x.fillText(p.n.slice(0,7),32,19);}
+ else{x.beginPath();x.moveTo(14,8);x.lineTo(50,8);x.lineTo(46,42);x.lineTo(18,42);x.closePath();x.fill();x.stroke();x.fillStyle=p.c2;x.fillRect(14,8,36,10);x.fillStyle="#fff";x.font="bold 7px sans-serif";x.textAlign="center";x.fillText(p.n.slice(0,9),32,16);}
+}
+function renderTray(){
+ const t=document.getElementById("tray");
+ t.innerHTML=tray.length?tray.map(id=>"<span class='trayItem'>"+prod(id).n+"</span>").join(""):"<span class='note'>Pindutin ang produkto sa ibaba para ihanda ang order.</span>";
+}
+function toggleTray(id){
+ const i=tray.indexOf(id);
+ if(i>=0)tray.splice(i,1);
+ else{if(tray.length>=3){toast("Hanggang 3 items lang");sfx.err();return;}tray.push(id);}
+ renderTray();renderShelf();
+}
+document.getElementById("serveBtn").onclick=()=>{
+ const q=queue.find(q=>q.state==="order");
+ if(!q){toast("Walang nag-oorder pa");return;}
+ if(!tray.length){toast("Pumili muna ng produkto");sfx.err();return;}
+ // check match (order-insensitive) + stock
+ const a=[...tray].sort().join(),b=[...q.order].sort().join();
+ const missing=q.order.filter(id=>(S.stock[id]|0)<=0);
+ if(missing.length){toast("Ubos ang "+missing.map(id=>prod(id).n).join(", ")+" — di mabenta");sfx.err();return;}
+ if(a!==b){toast("Mali ang order! Gusto: "+onames(q.order));sfx.err();return;}
+ // sale!
+ let earn=0;q.order.forEach(id=>{S.stock[id]--;earn+=prod(id).price;
+  flyItems.push({id,x0:240,y0:230,x1:q.x,y1:200,t:0});});
+ S.coins+=earn;S.sales++;
+ sfx.buy();setTimeout(()=>sfx.coin(),250);
+ toast("Salamat! +"+earn+" 🪙 ("+LINES.thanks[Math.floor(Math.random()*LINES.thanks.length)]+")");
+ q.state="leaving";q.gone=true;tray=[];
+ if(S.staff>0){S.coins+=2;toast("Tinulungan ng staff! +"+earn+" +2 🪙");}
+ renderTop();renderShelf();renderTray();
+ setTimeout(()=>{if(queue[0]&&queue[0].state==="order")showOrder(queue[0]);else hideBubble();},600);
+};
+document.getElementById("clearBtn").onclick=()=>{tray=[];renderTray();renderShelf();};
+/* tabs */
+document.querySelectorAll("#tabs button").forEach(b=>b.onclick=()=>{
+ document.querySelectorAll("#tabs button").forEach(x=>x.classList.remove("act"));b.classList.add("act");
+ document.querySelectorAll(".sheet").forEach(s=>s.classList.remove("act"));
+ document.getElementById("sh-"+b.dataset.s).classList.add("act");});
+/* sound/motion */
+document.getElementById("sndBtn").onclick=e=>{S.muted=!S.muted;if(S.muted)stopMusic();else{ac();startMusic();}renderTop();save();};
+document.getElementById("motionBtn").onclick=()=>{S.reduced=!S.reduced;toast(S.reduced?"Reduced motion ON":"Reduced motion OFF");renderTop();save();};
+/* ============ DELIVERY ============ */
+function addStockMixed(n,filter){
+ // distribute n across unlocked (or filter), respect capacity, overflow to dbox
+ let room=capacity()-totalStock(),given=0,box=0;
+ const pool=PRODUCTS.filter(p=>S.unlocked.includes(p.id)&&(!filter||filter.includes(p.id)));
+ for(let i=0;i<n;i++){const p=pool[i%pool.length];if(room>0){S.stock[p.id]=(S.stock[p.id]|0)+1;room--;given++;}else{S.dbox[p.id]=(S.dbox[p.id]|0)+1;box++;}}
+ return {given,box};
+}
+document.getElementById("claimBtn").onclick=()=>{
+ const d=manilaDate();if(d===S.lastClaim){toast("Na-claim na ngayong araw");return;}
+ const r=addStockMixed(freeAmt());
+ S.lastClaim=d;sfx.box();toast("📦 Libreng delivery: "+r.given+" sa istante"+(r.box?(", "+r.box+" sa box"):"")+"!");
+ renderAll();
+};
+let pendingBonus=false;
+document.getElementById("claimAdBtn").onclick=()=>{const d=manilaDate();if(d===S.lastClaim){toast("Na-claim na ngayong araw");return;}pendingBonus=true;openAd("daily");};
+document.getElementById("watchAdBtn").onclick=()=>{pendingBonus=false;openAd("extra");};
+function fillBundle(){const s=document.getElementById("adBundle");s.innerHTML="";
+ unlockedList().forEach(p=>{const o=document.createElement("option");o.value=p.id;o.textContent=p.n+" +6 (Demo Ad)";s.appendChild(o);});}
+let adMode="extra",adT=null;
+function openAd(mode){adMode=mode;document.getElementById("adM").classList.add("open");
+ const bar=document.getElementById("adbar"),fin=document.getElementById("finishAd");
+ let s=3;bar.style.width="0";fin.disabled=true;fin.textContent="Tapusin (3s)";
+ clearInterval(adT);adT=setInterval(()=>{s--;const p=(3-s)/3*100;bar.style.width=p+"%";
+  if(s<=0){clearInterval(adT);fin.disabled=false;fin.textContent="Kunin ang +6 🎁";bar.style.width="100%";}else fin.textContent="Tapusin ("+s+"s)";},1000);}
+document.getElementById("closeAd").onclick=()=>{clearInterval(adT);document.getElementById("adM").classList.remove("open");toast("Ni-close ang ad — walang reward");};
+document.getElementById("finishAd").onclick=()=>{
+ document.getElementById("adM").classList.remove("open");
+ if(adMode==="daily"){const d=manilaDate();const r=addStockMixed(freeAmt()+6);S.lastClaim=d;
+  toast("📦 Daily + bonus: "+r.given+" sa istante"+(r.box?(", "+r.box+" box"):"")+" (eksaktong +6 bonus)");sfx.box();}
+ else{const id=document.getElementById("adBundle").value;const r=addStockMixed(6,[id]);
+  toast("📺 Salamat sa panood! +6 "+prod(id).n+(r.box?(" ("+r.box+" sa box, puno!)"):""));sfx.box();}
+ pendingBonus=false;renderAll();
+};
+document.getElementById("pack1").onclick=()=>toast("DEMO lang — walang tunay na bayad. Hindi ito investment.");
+document.getElementById("pack2").onclick=()=>toast("DEMO lang — walang tunay na bayad. Hindi ito investment.");
+document.getElementById("stashBtn").onclick=()=>{
+ let moved=0;for(const k in S.dbox){while(S.dbox[k]>0&&totalStock()<capacity()){S.dbox[k]--;S.stock[k]=(S.stock[k]|0)+1;moved++;}if(S.dbox[k]<=0)delete S.dbox[k];}
+ toast(moved?"Inilipat: "+moved:"Puno pa ang istante");sfx.pop();renderAll();};
+function renderDbox(){const e=document.getElementById("dbox");const ks=Object.keys(S.dbox);
+ e.textContent=ks.length?ks.map(k=>prod(k).n+" ×"+S.dbox[k]).join(" · "):"Walang laman ang box.";}
+/* ============ UPGRADES ============ */
+function renderUpg(){
+ const u=document.getElementById("upg");u.innerHTML="";
+ // shop
+ const nx=SHOPLV[S.shop+1];
+ u.innerHTML+="<div class='card'>🏪 <b>"+SHOPLV[S.shop].n+"</b> (cap "+capacity()+")<br>"+(nx?"Susunod: <b>"+nx.n+"</b> cap "+nx.cap+" — <b>"+nx.cost+" 🪙</b>":"Max na! 🎉")+(nx?"<br><br><button class='btn green' id='upShop' "+(S.coins<nx.cost?"disabled":"")+">Upgrade ("+nx.cost+" 🪙)</button>":"")+"</div>";
+ // products
+ PRODUCTS.filter(p=>!S.unlocked.includes(p.id)).forEach(p=>{
+  u.innerHTML+="<div class='card'>🍪 <b>"+p.n+"</b> ("+p.era+") — 60 🪙 <button class='btn' data-un='"+p.id+"' "+(S.coins<60?"disabled":"")+">Unlock</button></div>";});
+ // era
+ const ne=ERAS[S.eraIdx+1];
+ u.innerHTML+="<div class='card'>🏘️ <b>Barangay: "+ERAS[S.eraIdx]+"</b><br>"+(ne?"Sunod: "+ne+" — 200 🪙 (kubo→kongkreto, lupa→simentado, bagong damit!)":"2026 na — modernong talipapa! 🎉")+(ne?"<br><br><button class='btn' id='upEra' "+(S.coins<200?"disabled":"")+">Lipad sa "+ne+" (200 🪙)</button>":"")+"</div>";
+ u.innerHTML+="<div class='card'>🧑‍🌾 <b>Staff: "+S.staff+"</b> (+2 🪙/benta) — 120 🪙 <button class='btn' id='hire' "+(S.coins<120?"disabled":"")+">Hire</button></div>";
+ u.innerHTML+="<div class='card'>🪴 <b>Palamuti: "+S.decor+"</b> — 40 🪙 <button class='btn' id='decor' "+(S.coins<40?"disabled":"")+">Bili</button></div>";
+ u.innerHTML+="<div class='card'>🗑️ <button class='btn ghost' id='reset'>Reset save (may confirm)</button> <button class='btn ghost' id='replay2'>↺ Replay Story</button></div>";
+ u.querySelectorAll("[data-un]").forEach(b=>b.onclick=()=>{const id=b.dataset.un;if(S.coins<60)return;S.coins-=60;S.unlocked.push(id);S.stock[id]=(S.stock[id]|0)+6;toast("Na-unlock: "+prod(id).n+" (+6 panimula)!");sfx.buy();renderAll();});
+ const a=u.querySelector("#upShop");if(a)a.onclick=()=>{if(S.coins<nx.cost)return;S.coins-=nx.cost;S.shop++;toast("🎉 "+SHOPLV[S.shop].n+"!");sfx.buy();renderAll();};
+ const e2=u.querySelector("#upEra");if(e2)e2.onclick=()=>{if(S.coins<200)return;S.coins-=200;S.eraIdx++;toast("🏘️ Welcome to "+ERAS[S.eraIdx]+"!");sfx.buy();renderAll();};
+ u.querySelector("#hire").onclick=()=>{if(S.coins<120)return;S.coins-=120;S.staff++;toast("Hired! +2 🪙 kada benta");renderAll();};
+ u.querySelector("#decor").onclick=()=>{if(S.coins<40)return;S.coins-=40;S.decor++;toast("Gumanda ang tindahan! 🪴");renderAll();};
+ u.querySelector("#reset").onclick=()=>{if(confirm("I-reset ang lahat?")){localStorage.removeItem(KEY);location.reload();}};
+ u.querySelector("#replay2").onclick=()=>{storyI=0;document.getElementById("storyM").classList.add("open");showStory();};
+}
+/* ============ CHARACTER ============ */
+function renderChar(){
+ const p=document.getElementById("charPane");
+ p.innerHTML="<div class='card'>👤 <b>"+S.char.name+"</b> · "+outfitName()+" · Era "+ERAS[S.eraIdx]+"<br><span class='note'>Damit nag-iiba ng hiwa bawat era (hindi recolor lang).</span><br><br><button class='btn' id='editC'>Baguhin</button> <button class='btn ghost' id='replay3'>↺ Replay Story</button></div>";
+ p.querySelector("#editC").onclick=()=>{buildCharOpts();document.getElementById("charM").classList.add("open");};
+ p.querySelector("#replay3").onclick=()=>{storyI=0;document.getElementById("storyM").classList.add("open");showStory();};
+}
+function buildCharOpts(){
+ const c=S.char,el=document.getElementById("charOpts");
+ function grp(t,arr,cur,fn){
+  let h="<div class='note' style='margin-top:8px'>"+t+"</div><div class='opt'>";
+  arr.forEach((a,i)=>{h+="<button data-g='"+t+"' data-i='"+i+"' class='"+(cur===i?"sel":"")+"'>"+a+"</button>";});return h+"</div>";}
+ el.innerHTML=grp("Balat",["☀️ maputi","🍯 kayumanggi","🤎 morena","🌑 deep"],c.skin%4,[0,1,2,3].includes(0)?0:0)
+  +grp("Buhok",["⚫ itim","🟤 brown","🟡 light","⚪ puti"],c.hair%4)
+  +grp("Gupit",HSTYLES,c.hs)
+  +grp("Katawan",["payat","sakto","malusog"],c.body)
+  +grp("Damit-1990",CLOTHES90,c.cloth%4);
+ el.querySelectorAll("button").forEach(b=>b.onclick=()=>{
+  const g=b.dataset.g,i=+b.dataset.i;
+  if(g==="Balat")c.skin=[1,2,4,5][i]||1;
+  if(g==="Buhok")c.hair=i+1;if(g==="Gupit")c.hs=i;if(g==="Katawan")c.body=i;if(g==="Damit-1990")c.cloth=i;
+  S.char.name=document.getElementById("pname").value||"Apo";
+  buildCharOpts();save();});
+ document.getElementById("pname").value=c.name;
+}
+document.getElementById("startBtn").onclick=()=>{
+ S.char.name=document.getElementById("pname").value||"Apo";
+ S.seenStory=true;save();document.getElementById("charM").classList.remove("open");toast("Mabuhay, "+S.char.name+"! 🎉");renderAll();};
+/* ============ STORY ============ */
+const STORY=[
+ ["🛒","1990, Barangay Sta. Mesa…\n“Nay, ako na pong bahala sa karo ni Lola.” — Ikaw, bagong dating na may dalang pangarap."],
+ ["🏠","Narito ang lumang karong kahoy ni Lola: maalikabok, pero matibay. “Ayusin natin 'yan, apo!”"],
+ ["🍪","Inayos mo ang natirang meryenda: Pompoms, Sweet Corn, Sizzling Bangus, Lumpia, Choc Nut… at malamig na Sarsi!"],
+ ["🧒","Unang customer: si Jun-jun, tumatakbo! “Ate/Kuya, pabili po! Piso lang dala ko noong araw… ngayon, barya ko ipon!”"],
+ ["🎉","Simula ng Tiny Tindahan! Magbenta, mag-ipon ng 🪙 (game currency lang), mag-upgrade hanggang 2026!"],
+];
+let storyI=0;
+function showStory(){
+ const e=STORY[storyI];
+ document.getElementById("storyImg").textContent=e[0];
+ document.getElementById("storyTxt").innerText=(storyI+1)+"/"+STORY.length+" — "+e[1];
+ document.getElementById("nextStory").textContent=storyI===STORY.length-1?"Maglaro na! 🎮":"Susunod ➜";
+}
+document.getElementById("nextStory").onclick=()=>{
+ if(storyI<STORY.length-1){storyI++;showStory();}
+ else{document.getElementById("storyM").classList.remove("open");
+  if(!S.seenStory){buildCharOpts();document.getElementById("charM").classList.add("open");}}};
+document.getElementById("skipStory").onclick=()=>{document.getElementById("storyM").classList.remove("open");
+ if(!S.seenStory){buildCharOpts();document.getElementById("charM").classList.add("open");}S.seenStory=true;save();};
+document.getElementById("replayStory").onclick=()=>{storyI=0;showStory();};
+/* ============ BOOT ============ */
+function renderAll(){renderTop();renderShelf();renderTray();renderUpg();renderChar();renderDbox();fillBundle();}
+load();if(S.reduced===undefined)S.reduced=reducedPref;
+showStory();
+if(S.seenStory)document.getElementById("storyM").classList.remove("open");
+else document.getElementById("charM").classList.remove("open");
+renderAll();
+requestAnimationFrame(scene);
+// out-of-stock ambient chatter
+setInterval(()=>{
+ if(!queue.length&&totalStock()===0&&!document.getElementById("storyM").classList.contains("open")){
+  document.getElementById("custName").textContent="Ubusan ng stock! 🥲 — puwede pa ring mag-ayos, mag-customize, o kumuha ng Delivery (hindi naka-block ang laro).";
+ }
+},3000);
+</script>
+</body>
+</html>

@@ -1,0 +1,145 @@
+<!DOCTYPE html>
+<html lang="fil">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no, viewport-fit=cover">
+<title>Tiny Tindahan — 1990 to 2026</title>
+<meta name="description" content="Tiny Tindahan: nostalgic Filipino store-management 2D game. 1990 pushcart to 2026 talipapa.">
+<link rel="stylesheet" href="style.css">
+</head>
+<body>
+<div id="app">
+  <header id="topbar">
+    <div class="brand">🏪 Tiny Tindahan <span id="eraBadge" class="era-badge">1990</span></div>
+    <div class="stats">
+      <span id="coinStat" title="Coins (game currency only)">🪙 <b id="coinVal">0</b></span>
+      <span id="stockStat" title="Stock / Capacity">📦 <b id="stockVal">0/60</b></span>
+      <button id="soundBtn" aria-label="Music on/off">🔊</button>
+    </div>
+  </header>
+
+  <!-- STORY SCREEN -->
+  <section id="storyScreen" class="screen">
+    <canvas id="storyCanvas" width="420" height="400"></canvas>
+    <div class="story-box">
+      <div id="storyYear">TAONG 1990…</div>
+      <p id="storyText">…</p>
+      <div class="row">
+        <button id="storyNext" class="btn primary">Sunod ➜</button>
+        <button id="storySkip" class="btn ghost">Laktawan ⏭</button>
+      </div>
+      <button id="storyReplay" class="btn small hidden">↺ Ulitin ang kuwento</button>
+    </div>
+  </section>
+
+  <!-- CHARACTER SCREEN -->
+  <section id="charScreen" class="screen hidden">
+    <h2>Sino ka sa barangay?</h2>
+    <canvas id="charPreview" width="220" height="240"></canvas>
+    <label class="fld">Pangalan
+      <input id="charName" maxlength="14" value="Apo" placeholder="Hal. Ligaya">
+    </label>
+    <div class="opt-group"><span>Kulay ng balat</span><div id="skinOpts" class="opts"></div></div>
+    <div class="opt-group"><span>Mukha</span><div id="faceOpts" class="opts"></div></div>
+    <div class="opt-group"><span>Buhok</span><div id="hairOpts" class="opts"></div></div>
+    <div class="opt-group"><span>Katawan</span><div id="bodyOpts" class="opts"></div></div>
+    <div class="opt-group"><span>Damit (1990)</span><div id="outfitOpts" class="opts"></div></div>
+    <p class="hint">🔓 Bagong damit sa 2000, 2010 at 2026. Ang damit ay nagpapalit ng itsura, hindi lang kulay.</p>
+    <button id="charStart" class="btn primary big">Buksan ang kariton 🛒</button>
+  </section>
+
+  <!-- GAME SCREEN -->
+  <section id="gameScreen" class="screen hidden">
+    <canvas id="gameCanvas" width="420" height="430"></canvas>
+    <div id="orderBar" class="order-bar hidden">
+      <div id="orderText"></div>
+      <div id="trayRow"></div>
+      <div class="row">
+        <button id="serveBtn" class="btn primary">Ibigay 🛍</button>
+        <button id="clearTrayBtn" class="btn ghost">Alisin</button>
+      </div>
+    </div>
+    <div id="shelfWrap">
+      <div class="shelf-title">🧺 Paninda — tapikin para ilagay sa tray</div>
+      <div id="shelf" class="shelf"></div>
+    </div>
+    <nav id="tabs">
+      <button data-tab="shop" class="tab active">🏪<small>Tindahan</small></button>
+      <button data-tab="delivery" class="tab">📦<small>Delivery</small></button>
+      <button data-tab="upgrades" class="tab">⬆️<small>Upgrades</small></button>
+      <button data-tab="char" class="tab">🧍<small>Katauhan</small></button>
+    </nav>
+    <div id="panels">
+      <div id="panel-shop" class="panel">
+        <div id="dialogLog" class="dialog-log"></div>
+        <div class="row wrap">
+          <button id="radioBtn" class="btn small">📻 Radyo: ON</button>
+          <button id="motionBtn" class="btn small">🍃 Galaw: ON</button>
+          <button id="replayStoryBtn" class="btn small">↺ Kuwento</button>
+          <button id="resetBtn" class="btn small danger">🗑 Reset (may confirm)</button>
+        </div>
+        <label class="fld inline">🔊 Volume <input id="volRange" type="range" min="0" max="100" value="60"></label>
+        <p class="hint">🪙 Coins ay game currency lang. Hindi pwedeng i-cash out. Hindi pambili ng stock — pang-upgrade lang.</p>
+      </div>
+      <div id="panel-delivery" class="panel hidden">
+        <h3>📦 Libreng Delivery <span class="pill">Asia/Manila</span></h3>
+        <p id="dailyInfo" class="hint"></p>
+        <div class="row">
+          <button id="claimFreeBtn" class="btn primary">Claim Free Delivery</button>
+          <button id="claimAdBtn" class="btn accent">📺 Watch Ad — Claim +6 Bonus</button>
+        </div>
+        <h3>📺 Extra stock (Rewarded Demo Ad)</h3>
+        <p class="hint">Bawat tapos na ad = eksaktong <b>6 piraso</b>. Piliin ang bundle bago manood.</p>
+        <div class="row wrap" id="bundleRow"></div>
+        <button id="watchAdBtn" class="btn accent">▶ Manood ng Demo Ad (+6)</button>
+        <p id="adStatus" class="hint"></p>
+        <h3>💰 Stock Packs (demo-only)</h3>
+        <div id="paidPacks"></div>
+        <h3>📥 Delivery box (sobrang stock)</h3>
+        <div id="deliveryBoxList" class="box-list"></div>
+        <button id="moveBoxBtn" class="btn small">Ilipat sa shelf (kung may espasyo)</button>
+      </div>
+      <div id="panel-upgrades" class="panel hidden">
+        <h3>⬆️ Pag-unlad ng negosyo</h3>
+        <div id="eraProgress" class="era-progress"></div>
+        <div id="upgradeList"></div>
+        <h3>🧑‍🤝‍🧑 Staff (coins)</h3>
+        <div id="staffList"></div>
+        <h3>🎀 Dekorasyon</h3>
+        <div id="decorList" class="row wrap"></div>
+      </div>
+      <div id="panel-char" class="panel hidden">
+        <h3>🧍 Katauhan</h3>
+        <div id="charMini"></div>
+        <button id="editCharBtn" class="btn small">✏️ Palitan ang itsura</button>
+        <div id="closetList" class="row wrap"></div>
+      </div>
+    </div>
+  </section>
+
+  <!-- EDIT CHARACTER MODAL -->
+  <div id="editModal" class="modal hidden">
+    <div class="modal-card">
+      <h3>Baguhin ang itsura</h3>
+      <canvas id="editPreview" width="220" height="200"></canvas>
+      <div class="opt-group"><span>Buhok</span><div id="editHair" class="opts"></div></div>
+      <div class="opt-group"><span>Damit</span><div id="editOutfit" class="opts"></div></div>
+      <div class="row"><button id="editClose" class="btn primary">Tapos ✔</button></div>
+    </div>
+  </div>
+
+  <!-- DEMO AD MODAL -->
+  <div id="adModal" class="modal hidden">
+    <div class="modal-card ad-card">
+      <div class="ad-tag">DEMO AD — walang totoong kita</div>
+      <div id="adBody">🎉 Salamat sa pagsuporta!<br>Tiny Tindahan Demo Ad…</div>
+      <div id="adTimer">3</div>
+      <button id="adClose" class="btn ghost">Isara ✖ (walang reward)</button>
+    </div>
+  </div>
+
+  <div id="toast" class="toast hidden"></div>
+</div>
+<script src="game.js"></script>
+</body>
+</html>

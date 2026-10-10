@@ -1,0 +1,58 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 240 360" role="img" aria-label="Apo boy locked outfit: 90s jacket">
+  <title>Apo (boy) — 90s Jacket, locked Lv. 15</title>
+  <defs>
+    <radialGradient id="jskin" cx="42%" cy="34%" r="75%">
+      <stop offset="0%" stop-color="#d29a68"/>
+      <stop offset="60%" stop-color="#c08a58"/>
+      <stop offset="100%" stop-color="#a96f42"/>
+    </radialGradient>
+    <linearGradient id="jacket" x1="0" y1="0" x2="1" y2="1">
+      <stop offset="0%" stop-color="#c25a4a"/>
+      <stop offset="55%" stop-color="#a84438"/>
+      <stop offset="55.5%" stop-color="#3d4f6e"/>
+      <stop offset="100%" stop-color="#2c3a52"/>
+    </linearGradient>
+    <linearGradient id="jeans" x1="0" y1="0" x2="0" y2="1">
+      <stop offset="0%" stop-color="#5f7b95"/>
+      <stop offset="100%" stop-color="#46586c"/>
+    </linearGradient>
+    <linearGradient id="jhair" x1="0" y1="0" x2="0" y2="1">
+      <stop offset="0%" stop-color="#4a382a"/>
+      <stop offset="100%" stop-color="#2e2318"/>
+    </linearGradient>
+  </defs>
+  <ellipse cx="120" cy="332" rx="54" ry="10" fill="#6b5a44" opacity="0.18"/>
+  <ellipse cx="120" cy="66" rx="37" ry="36" fill="url(#jhair)"/>
+  <!-- jeans legs -->
+  <path d="M98 240 q-2 44 -1 72 q0 8 8 8 l6 0 q8 0 8 -8 q1 -28 1 -72 z" fill="url(#jeans)" stroke="#5a4632" stroke-opacity="0.5" stroke-width="2.5" stroke-linejoin="round"/>
+  <path d="M121 240 q-1 44 0 72 q0 8 8 8 l6 0 q8 0 8 -8 q1 -28 -1 -72 z" fill="url(#jeans)" stroke="#5a4632" stroke-opacity="0.5" stroke-width="2.5" stroke-linejoin="round"/>
+  <ellipse cx="108" cy="326" rx="17" ry="9" fill="#e8e2d2" stroke="#5a4632" stroke-opacity="0.55" stroke-width="2"/>
+  <path d="M93 326 q15 5 30 0" fill="none" stroke="#c25a4a" stroke-width="3"/>
+  <ellipse cx="134" cy="326" rx="17" ry="9" fill="#e8e2d2" stroke="#5a4632" stroke-opacity="0.55" stroke-width="2"/>
+  <path d="M119 326 q15 5 30 0" fill="none" stroke="#c25a4a" stroke-width="3"/>
+  <!-- jacket sleeves -->
+  <path d="M86 130 q-12 42 -9 74 q1 9 9 9 q8 0 8 -9 q-1 -32 6 -68 z" fill="#a84438" stroke="#5a4632" stroke-opacity="0.5" stroke-width="2.5" stroke-linejoin="round"/>
+  <path d="M154 130 q12 42 9 74 q-1 9 -9 9 q-8 0 -8 -9 q1 -32 -6 -68 z" fill="#2c3a52" stroke="#5a4632" stroke-opacity="0.5" stroke-width="2.5" stroke-linejoin="round"/>
+  <circle cx="85" cy="214" r="9.5" fill="url(#jskin)" stroke="#5a4632" stroke-opacity="0.5" stroke-width="2.5"/>
+  <circle cx="155" cy="214" r="9.5" fill="url(#jskin)" stroke="#5a4632" stroke-opacity="0.5" stroke-width="2.5"/>
+  <!-- track jacket body -->
+  <path d="M86 116 q34 -13 68 0 q8 40 6 80 q-1 44 -4 66 q-35 9 -72 0 q-3 -22 -4 -66 q-2 -40 6 -80 z" fill="url(#jacket)" stroke="#5a4632" stroke-opacity="0.5" stroke-width="2.5" stroke-linejoin="round"/>
+  <path d="M120 110 l0 148" stroke="#e8e2d2" stroke-opacity="0.85" stroke-width="3"/>
+  <path d="M106 108 l14 10 l14 -10 l3 8 q-17 10 -17 10 q0 0 -17 -10 z" fill="#e8e2d2" stroke="#5a4632" stroke-opacity="0.5" stroke-width="2" stroke-linejoin="round"/>
+  <path d="M100 150 l-6 60 M140 150 l6 60" stroke="#e8e2d2" stroke-opacity="0.7" stroke-width="3"/>
+  <path d="M84 252 q36 10 72 0" fill="none" stroke="#e8e2d2" stroke-opacity="0.7" stroke-width="4"/>
+  <ellipse cx="108" cy="170" rx="12" ry="30" fill="#ffffff" opacity="0.18"/>
+  <rect x="111" y="94" width="18" height="22" rx="7" fill="#b57e4e" stroke="#5a4632" stroke-opacity="0.4" stroke-width="2"/>
+  <ellipse cx="120" cy="70" rx="33" ry="34" fill="url(#jskin)" stroke="#5a4632" stroke-opacity="0.5" stroke-width="2.5"/>
+  <circle cx="88" cy="74" r="7" fill="url(#jskin)" stroke="#5a4632" stroke-opacity="0.5" stroke-width="2"/>
+  <circle cx="152" cy="74" r="7" fill="url(#jskin)" stroke="#5a4632" stroke-opacity="0.5" stroke-width="2"/>
+  <!-- 90s side-part hair -->
+  <path d="M87 62 q2 -30 30 -33 q30 -3 36 30 q-4 -10 -14 -14 q4 10 0 16 q-6 -12 -18 -14 q2 10 -2 14 q-8 -8 -18 -8 q-8 4 -10 13 q-4 -2 -4 -4 z" fill="url(#jhair)" stroke="#5a4632" stroke-opacity="0.4" stroke-width="2" stroke-linejoin="round"/>
+  <circle cx="108" cy="74" r="3.2" fill="#2e2620"/>
+  <circle cx="132" cy="74" r="3.2" fill="#2e2620"/>
+  <circle cx="109" cy="73" r="1" fill="#fff" opacity="0.8"/>
+  <circle cx="133" cy="73" r="1" fill="#fff" opacity="0.8"/>
+  <path d="M109 88 q11 8 22 0" fill="none" stroke="#5a3226" stroke-width="2.5" stroke-linecap="round"/>
+  <ellipse cx="99" cy="83" rx="6" ry="4" fill="#d97f6a" opacity="0.35"/>
+  <ellipse cx="141" cy="83" rx="6" ry="4" fill="#d97f6a" opacity="0.35"/>
+</svg>

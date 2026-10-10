@@ -1,0 +1,57 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 240 360" role="img" aria-label="Apo boy starter: faded shirt and shorts">
+  <title>Apo (boy) — Faded Shirt &amp; Shorts, starter 1990</title>
+  <defs>
+    <radialGradient id="fskin" cx="42%" cy="34%" r="75%">
+      <stop offset="0%" stop-color="#d29a68"/>
+      <stop offset="60%" stop-color="#c08a58"/>
+      <stop offset="100%" stop-color="#a96f42"/>
+    </radialGradient>
+    <linearGradient id="ftee" x1="0" y1="0" x2="0" y2="1">
+      <stop offset="0%" stop-color="#9db8ab"/>
+      <stop offset="100%" stop-color="#7d9a8c"/>
+    </linearGradient>
+    <linearGradient id="fshorts" x1="0" y1="0" x2="0" y2="1">
+      <stop offset="0%" stop-color="#a08e72"/>
+      <stop offset="100%" stop-color="#7f6c52"/>
+    </linearGradient>
+    <linearGradient id="fhair" x1="0" y1="0" x2="0" y2="1">
+      <stop offset="0%" stop-color="#4a382a"/>
+      <stop offset="100%" stop-color="#2e2318"/>
+    </linearGradient>
+  </defs>
+  <ellipse cx="120" cy="332" rx="54" ry="10" fill="#6b5a44" opacity="0.18"/>
+  <ellipse cx="120" cy="66" rx="37" ry="36" fill="url(#fhair)"/>
+  <path d="M100 248 q-2 40 -1 66 q0 8 8 8 q8 0 8 -8 q1 -26 1 -66 z" fill="url(#fskin)" stroke="#5a4632" stroke-opacity="0.5" stroke-width="2.5" stroke-linejoin="round"/>
+  <path d="M124 248 q-1 40 0 66 q0 8 8 8 q8 0 8 -8 q1 -26 -1 -66 z" fill="url(#fskin)" stroke="#5a4632" stroke-opacity="0.5" stroke-width="2.5" stroke-linejoin="round"/>
+  <ellipse cx="108" cy="327" rx="17" ry="7.5" fill="#7a5230" stroke="#5a4632" stroke-opacity="0.5" stroke-width="2"/>
+  <path d="M108 320 l-6 6 M108 320 l6 6" stroke="#4a3826" stroke-width="2.5" stroke-linecap="round"/>
+  <ellipse cx="133" cy="327" rx="17" ry="7.5" fill="#7a5230" stroke="#5a4632" stroke-opacity="0.5" stroke-width="2"/>
+  <path d="M133 320 l-6 6 M133 320 l6 6" stroke="#4a3826" stroke-width="2.5" stroke-linecap="round"/>
+  <path d="M92 194 q28 -10 56 0 l6 48 q1 8 -7 8 l-10 0 q-4 0 -5 -5 l-3 -18 l-4 0 l-3 18 q-1 5 -5 5 l-10 0 q-8 0 -7 -8 z" fill="url(#fshorts)" stroke="#5a4632" stroke-opacity="0.5" stroke-width="2.5" stroke-linejoin="round"/>
+  <path d="M120 196 l0 30" stroke="#5a4632" stroke-opacity="0.35" stroke-width="2"/>
+  <ellipse cx="112" cy="216" rx="11" ry="9" fill="#c4b294" opacity="0.5"/>
+  <!-- arms -->
+  <path d="M88 132 q-10 40 -8 70 q0 9 8 9 q8 0 8 -9 q0 -30 6 -66 z" fill="url(#fskin)" stroke="#5a4632" stroke-opacity="0.5" stroke-width="2.5" stroke-linejoin="round"/>
+  <path d="M152 132 q10 40 8 70 q0 9 -8 9 q-8 0 -8 -9 q0 -30 -6 -66 z" fill="url(#fskin)" stroke="#5a4632" stroke-opacity="0.5" stroke-width="2.5" stroke-linejoin="round"/>
+  <circle cx="81" cy="212" r="9.5" fill="url(#fskin)" stroke="#5a4632" stroke-opacity="0.5" stroke-width="2.5"/>
+  <circle cx="159" cy="212" r="9.5" fill="url(#fskin)" stroke="#5a4632" stroke-opacity="0.5" stroke-width="2.5"/>
+  <!-- faded tee with sleeves -->
+  <path d="M88 118 q32 -12 64 0 l10 10 q-4 12 -14 16 l-2 54 q-26 8 -52 0 l-2 -54 q-10 -4 -14 -16 z" fill="url(#ftee)" stroke="#5a4632" stroke-opacity="0.5" stroke-width="2.5" stroke-linejoin="round"/>
+  <path d="M104 112 q16 14 32 0 q-4 10 -16 10 q-12 0 -16 -10" fill="#c08a58" stroke="#5a4632" stroke-opacity="0.5" stroke-width="2"/>
+  <path d="M108 140 q12 -6 24 0 q-2 22 -12 22 q-10 0 -12 -22" fill="#e8ddc4" opacity="0.55"/>
+  <path d="M94 190 q26 6 52 0" fill="none" stroke="#5a4632" stroke-opacity="0.3" stroke-width="2" stroke-dasharray="5 4"/>
+  <ellipse cx="110" cy="150" rx="13" ry="24" fill="#ffffff" opacity="0.22"/>
+  <rect x="111" y="94" width="18" height="22" rx="7" fill="#b57e4e" stroke="#5a4632" stroke-opacity="0.4" stroke-width="2"/>
+  <ellipse cx="120" cy="70" rx="33" ry="34" fill="url(#fskin)" stroke="#5a4632" stroke-opacity="0.5" stroke-width="2.5"/>
+  <circle cx="88" cy="74" r="7" fill="url(#fskin)" stroke="#5a4632" stroke-opacity="0.5" stroke-width="2"/>
+  <circle cx="152" cy="74" r="7" fill="url(#fskin)" stroke="#5a4632" stroke-opacity="0.5" stroke-width="2"/>
+  <path d="M88 62 q4 -30 32 -32 q28 -2 32 32 q-2 -6 -8 -8 q1 8 -3 12 q-3 -8 -9 -10 q0 9 -5 12 q-4 -8 -10 -9 q-2 8 -7 10 q-4 -6 -6 -12 q-6 2 -8 8 q-6 -8 -8 -3 z" fill="url(#fhair)" stroke="#5a4632" stroke-opacity="0.4" stroke-width="2" stroke-linejoin="round"/>
+  <circle cx="108" cy="74" r="3.2" fill="#2e2620"/>
+  <circle cx="132" cy="74" r="3.2" fill="#2e2620"/>
+  <circle cx="109" cy="73" r="1" fill="#fff" opacity="0.8"/>
+  <circle cx="133" cy="73" r="1" fill="#fff" opacity="0.8"/>
+  <path d="M111 88 q9 6 18 0" fill="none" stroke="#5a3226" stroke-width="2.5" stroke-linecap="round"/>
+  <ellipse cx="99" cy="83" rx="6" ry="4" fill="#d97f6a" opacity="0.35"/>
+  <ellipse cx="141" cy="83" rx="6" ry="4" fill="#d97f6a" opacity="0.35"/>
+  <ellipse cx="134" cy="158" rx="14" ry="28" fill="#5d7268" opacity="0.16"/>
+</svg>

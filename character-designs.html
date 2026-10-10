@@ -1,0 +1,183 @@
+<!DOCTYPE html>
+<html lang="tl">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Tiny Tindahan — Character Designs (Opening Stage)</title>
+<style>
+  :root{
+    --paper:#f6f1e3; --cream:#fff8eb; --wood:#7c522f; --wood-dark:#51331a;
+    --olive:#7d8450; --leaf:#6b8e4e; --ochre:#d9ae62; --faded-red:#c25a4a;
+    --denim:#5a7186; --ink:#4a3a28;
+  }
+  *{box-sizing:border-box;-webkit-tap-highlight-color:transparent}
+  body{margin:0;background:var(--paper);color:var(--ink);
+    font-family:"Segoe UI",system-ui,Tahoma,sans-serif;
+    display:flex;justify-content:center;padding:12px;min-height:100vh}
+  #page{width:100%;max-width:920px;background:#e8dcc4;border:8px solid var(--wood);
+    border-radius:12px;box-shadow:0 8px 20px rgba(0,0,0,.2);overflow:hidden}
+  header{text-align:center;padding:14px 12px 6px}
+  header h1{margin:0;color:var(--wood-dark);font-size:26px;letter-spacing:.5px}
+  header p{margin:4px 0;color:#6b5a44;font-size:14px}
+  .sec{background:var(--cream);border:3px solid var(--wood);border-radius:10px;
+    margin:10px 12px;padding:12px}
+  .sec h2{margin:0 0 8px;color:var(--wood-dark);font-size:18px;text-align:center}
+  .sec .sub{text-align:center;font-size:13px;color:#6b5a44;margin:-4px 0 10px}
+  .genderRow{display:flex;gap:10px;justify-content:center;margin-bottom:4px}
+  .btn-toggle{padding:10px 22px;min-height:48px;border:2px solid var(--wood-dark);
+    background:#e0d0b0;font-size:15px;font-weight:800;border-radius:10px;cursor:pointer}
+  .btn-toggle.active{background:var(--leaf);color:#fff}
+  .nameRow{display:flex;justify-content:center;margin:8px 0}
+  .nameRow input{width:min(320px,90%);padding:10px;font-size:16px;text-align:center;
+    border:2px solid var(--wood);border-radius:8px;background:#fff}
+  .outfitGrid{display:grid;grid-template-columns:repeat(3,1fr);gap:10px}
+  @media(max-width:560px){.outfitGrid{grid-template-columns:repeat(2,1fr)}}
+  .card{background:#fff;border:2px solid #c9b892;border-radius:10px;padding:8px;
+    text-align:center;cursor:pointer}
+  .card img{width:100%;height:auto;max-height:230px;object-fit:contain}
+  .card .nm{font-weight:800;font-size:13px;margin-top:4px}
+  .card .tag{font-size:11px;color:#6b5a44}
+  .card.selected{border-color:var(--leaf);background:#eef5e6;box-shadow:0 0 0 2px var(--leaf)}
+  .card.locked{background:#eee;color:#888;border-style:dashed;cursor:not-allowed}
+  .card.locked img{filter:grayscale(.85) opacity(.75)}
+  .lockBadge{display:inline-block;background:var(--wood-dark);color:#ffe6b0;font-size:11px;
+    font-weight:800;border-radius:99px;padding:3px 10px;margin-top:4px}
+  .startRow{display:flex;justify-content:center;padding:4px 12px 14px}
+  #startBtn{padding:12px 40px;font-size:18px;font-weight:900;background:var(--leaf);
+    color:#fff;border:3px solid var(--wood-dark);border-radius:10px;cursor:pointer;
+    box-shadow:0 4px 0 var(--wood-dark)}
+  #startBtn:active{transform:translateY(2px);box-shadow:0 2px 0 var(--wood-dark)}
+  /* story */
+  #storyCard{display:none}
+  #storyCard.show{display:block}
+  .storyText{font-size:17px;line-height:1.6;font-style:italic;color:var(--wood-dark);
+    text-align:center;min-height:110px}
+  .storyBtns{display:flex;gap:10px;justify-content:center;margin-top:10px}
+  .storyBtns button{flex:1;max-width:220px;padding:12px;min-height:48px;font-weight:800;
+    font-size:15px;border-radius:10px;border:2px solid var(--wood-dark);cursor:pointer;background:#fff}
+  #nextStep{background:var(--leaf);color:#fff}
+  /* palette */
+  .swatches{display:flex;gap:8px;justify-content:center;flex-wrap:wrap;margin-top:8px}
+  .sw{width:52px;text-align:center;font-size:10px;color:#6b5a44}
+  .sw i{display:block;width:44px;height:30px;border-radius:6px;border:2px solid var(--wood-dark);margin:0 auto 3px}
+  .notes{font-size:13px;line-height:1.65;color:#5a4a34}
+  .notes li{margin-bottom:4px}
+  .queue{background:#f3e8cf}
+  footer{text-align:center;font-size:12px;color:#6b5a44;padding:0 12px 14px}
+</style>
+</head>
+<body>
+<div id="page">
+  <header>
+    <h1>🏪 TINY TINDAHAN</h1>
+    <p><strong>Karakter at Bihis ng Apo</strong> · opening-stage designs · watercolor cozy style</p>
+  </header>
+
+  <div class="sec">
+    <h2>1 · Piliin ang Apo</h2>
+    <div class="sub">Unang tauhan sa screen · pangalan · kasarian · bihis</div>
+    <div class="genderRow">
+      <button class="btn-toggle active" id="btnBoy" onclick="setGender('boy')">👦 Lalaki</button>
+      <button class="btn-toggle" id="btnGirl" onclick="setGender('girl')">👧 Babae</button>
+    </div>
+    <div class="nameRow"><input id="apoName" maxlength="15" placeholder="I-type ang pangalan (hal. Apo)"></div>
+  </div>
+
+  <div class="sec" id="boySec">
+    <h2>👦 Apo (Lalaki) — starter &amp; locked</h2>
+    <div class="sub">Tatlong simpleng pambahay (1990) · dalawang naka-lock na preview</div>
+    <div class="outfitGrid">
+      <div class="card selected" onclick="pick(this,'boy')"><img src="assets/characters/b-sando.svg" alt="Sando at puruntong"><div class="nm">Sando &amp; Puruntong</div><div class="tag">Pambahay · 1990 · starter</div></div>
+      <div class="card" onclick="pick(this,'boy')"><img src="assets/characters/b-faded.svg" alt="Faded shirt at shorts"><div class="nm">Faded Shirt &amp; Shorts</div><div class="tag">Pambahay · 1990 · starter</div></div>
+      <div class="card" onclick="pick(this,'boy')"><img src="assets/characters/b-polo.svg" alt="Lumang polo"><div class="nm">Lumang Polo</div><div class="tag">Pambahay · 1990 · starter</div></div>
+      <div class="card locked"><img src="assets/characters/b-uniform.svg" alt="School uniform, locked"><div class="nm">School Uniform</div><br><span class="lockBadge">🔒 Lv. 8</span></div>
+      <div class="card locked"><img src="assets/characters/b-jacket.svg" alt="90s jacket, locked"><div class="nm">90s Jacket</div><br><span class="lockBadge">🔒 Lv. 15</span></div>
+    </div>
+  </div>
+
+  <div class="sec" id="girlSec" style="display:none">
+    <h2>👧 Apo (Babae) — starter &amp; locked</h2>
+    <div class="sub">Tatlong simpleng pambahay (1990) · dalawang naka-lock na preview</div>
+    <div class="outfitGrid">
+      <div class="card selected" onclick="pick(this,'girl')"><img src="assets/characters/g-duster.svg" alt="Simpleng duster"><div class="nm">Simpleng Duster</div><div class="tag">Pambahay · 1990 · starter</div></div>
+      <div class="card" onclick="pick(this,'girl')"><img src="assets/characters/g-pambahay.svg" alt="Pambahay shirt at shorts"><div class="nm">Pambahay Shirt &amp; Shorts</div><div class="tag">Pambahay · 1990 · starter</div></div>
+      <div class="card" onclick="pick(this,'girl')"><img src="assets/characters/g-blouse.svg" alt="Cotton blouse"><div class="nm">Cotton Blouse</div><div class="tag">Pambahay · 1990 · starter</div></div>
+      <div class="card locked"><img src="assets/characters/g-dress.svg" alt="Sunday dress, locked"><div class="nm">Sunday Dress</div><br><span class="lockBadge">🔒 Lv. 8</span></div>
+      <div class="card locked"><img src="assets/characters/g-overalls.svg" alt="Overalls, locked"><div class="nm">Overalls</div><br><span class="lockBadge">🔒 Lv. 15</span></div>
+    </div>
+  </div>
+
+  <div class="startRow"><button id="startBtn" onclick="startStory()">SIMULAN ▶</button></div>
+
+  <div class="sec" id="storyCard">
+    <h2>2 · Ang Simula ng Kwento</h2>
+    <div class="sub">Pagkatapos pindutin ang SIMULAN — sulat ni Lola, kariton, unang araw</div>
+    <div class="storyText" id="storyText"></div>
+    <div class="storyBtns">
+      <button onclick="document.getElementById('storyCard').classList.remove('show')">⬅ Bumalik</button>
+      <button id="nextStep" onclick="nextStep()">ITULOY ▶</button>
+    </div>
+  </div>
+
+  <div class="sec">
+    <h2>🎨 Art-style notes (mula sa reference)</h2>
+    <ul class="notes">
+      <li><strong>Wash, hindi flat:</strong> bawat sprite ay may translucent watercolor blobs at soft gradients — walang solid cartoon fill.</li>
+      <li><strong>Malambot na outline:</strong> warm brown (#5a4632, 50% opacity), rounded joins — walang itim na mabigat na linya.</li>
+      <li><strong>Humble 1990:</strong> kupas na tela, tagpi (dashed stitch), tsinelas sa starter; sapatos at mas maayos na hiwa lang sa locked outfits — kita ang pag-asenso.</li>
+      <li><strong>Mukha:</strong> tuldok na mata, maliit na ngiti, blush — tulad ng reference, readable kahit maliit sa phone.</li>
+      <li><strong>Isang scale:</strong> lahat ng Apo sprites ay 240×360 viewBox, paa sa iisang ground line (y≈332) — puwedeng i-swap nang walang talon.</li>
+    </ul>
+    <div class="swatches">
+      <div class="sw"><i style="background:#f6f1e3"></i>paper</div>
+      <div class="sw"><i style="background:#7d8450"></i>olive</div>
+      <div class="sw"><i style="background:#6b8e4e"></i>dahon</div>
+      <div class="sw"><i style="background:#d9ae62"></i>ochre</div>
+      <div class="sw"><i style="background:#7c522f"></i>kahoy</div>
+      <div class="sw"><i style="background:#c25a4a"></i>kupas pula</div>
+      <div class="sw"><i style="background:#5a7186"></i>maong</div>
+      <div class="sw"><i style="background:#c08a58"></i>kayumanggi</div>
+    </div>
+  </div>
+
+  <div class="sec queue">
+    <h2>📦 Susunod (hindi pa kasama dito)</h2>
+    <div class="sub" style="margin:0">Run-down nipa hut · inherited pushcart · starting nostalgic goods — hihintayin ang approval ng character designs bago simulan, ayon sa staged plan.</div>
+  </div>
+
+  <footer>Original designs para sa Tiny Tindahan · hindi kopya ng reference — estilo lang ang pinagbasehan.</footer>
+</div>
+
+<script>
+  let gender='boy', step=0;
+  const steps=[
+    '"Mahal kong apo, kung nababasa mo ito, oras na para ipasa ko sa iyo ang ating maliit na tindahan..." — sulat ni Lola, 1990.',
+    '"Maliit man at payak, sa kariton na ito umikot ang buhay ng ating komunidad noong araw."',
+    '"Kakaunti man ang paninda sa ngayon, naniniwala akong sa iyong sipag at tiyaga, muli mong mabubuhay ang Tiny Tindahan."',
+    '💛 Dumating ka sa barangay. Nakatayo ang lumang kariton ni Lola sa tabi ng sirang nipa hut — kaunting paninda, malaking pangarap. (Itutuloy sa gameplay...)'
+  ];
+  function setGender(g){
+    gender=g;
+    document.getElementById('btnBoy').classList.toggle('active',g==='boy');
+    document.getElementById('btnGirl').classList.toggle('active',g==='girl');
+    document.getElementById('boySec').style.display=g==='boy'?'':'none';
+    document.getElementById('girlSec').style.display=g==='girl'?'':'none';
+  }
+  function pick(el,g){
+    document.querySelectorAll('#'+(g==='boy'?'boySec':'girlSec')+' .card:not(.locked)')
+      .forEach(c=>c.classList.remove('selected'));
+    el.classList.add('selected');
+  }
+  function startStory(){
+    step=0; show();
+    document.getElementById('storyCard').classList.add('show');
+    document.getElementById('storyCard').scrollIntoView({behavior:'smooth'});
+  }
+  function show(){
+    document.getElementById('storyText').innerText=steps[step];
+    document.getElementById('nextStep').innerText=step===steps.length-1?'✔ TAPOS':'ITULOY ▶';
+  }
+  function nextStep(){ if(step<steps.length-1){step++;show();} }
+</script>
+</body>
+</html>

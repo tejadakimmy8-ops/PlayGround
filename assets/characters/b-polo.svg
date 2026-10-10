@@ -1,0 +1,56 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 240 360" role="img" aria-label="Apo boy starter: old polo">
+  <title>Apo (boy) — Lumang Polo, starter 1990</title>
+  <defs>
+    <radialGradient id="pskin" cx="42%" cy="34%" r="75%">
+      <stop offset="0%" stop-color="#d29a68"/>
+      <stop offset="60%" stop-color="#c08a58"/>
+      <stop offset="100%" stop-color="#a96f42"/>
+    </radialGradient>
+    <linearGradient id="polo" x1="0" y1="0" x2="0" y2="1">
+      <stop offset="0%" stop-color="#dfc07e"/>
+      <stop offset="100%" stop-color="#bd9a52"/>
+    </linearGradient>
+    <linearGradient id="pshorts" x1="0" y1="0" x2="0" y2="1">
+      <stop offset="0%" stop-color="#7d8a94"/>
+      <stop offset="100%" stop-color="#5f6c76"/>
+    </linearGradient>
+    <linearGradient id="phair" x1="0" y1="0" x2="0" y2="1">
+      <stop offset="0%" stop-color="#4a382a"/>
+      <stop offset="100%" stop-color="#2e2318"/>
+    </linearGradient>
+  </defs>
+  <ellipse cx="120" cy="332" rx="54" ry="10" fill="#6b5a44" opacity="0.18"/>
+  <ellipse cx="120" cy="66" rx="37" ry="36" fill="url(#phair)"/>
+  <path d="M100 248 q-2 40 -1 66 q0 8 8 8 q8 0 8 -8 q1 -26 1 -66 z" fill="url(#pskin)" stroke="#5a4632" stroke-opacity="0.5" stroke-width="2.5" stroke-linejoin="round"/>
+  <path d="M124 248 q-1 40 0 66 q0 8 8 8 q8 0 8 -8 q1 -26 -1 -66 z" fill="url(#pskin)" stroke="#5a4632" stroke-opacity="0.5" stroke-width="2.5" stroke-linejoin="round"/>
+  <ellipse cx="108" cy="327" rx="17" ry="7.5" fill="#5d4028" stroke="#5a4632" stroke-opacity="0.5" stroke-width="2"/>
+  <path d="M108 320 l-6 6 M108 320 l6 6" stroke="#3a2c1c" stroke-width="2.5" stroke-linecap="round"/>
+  <ellipse cx="133" cy="327" rx="17" ry="7.5" fill="#5d4028" stroke="#5a4632" stroke-opacity="0.5" stroke-width="2"/>
+  <path d="M133 320 l-6 6 M133 320 l6 6" stroke="#3a2c1c" stroke-width="2.5" stroke-linecap="round"/>
+  <path d="M92 194 q28 -10 56 0 l6 48 q1 8 -7 8 l-10 0 q-4 0 -5 -5 l-3 -18 l-4 0 l-3 18 q-1 5 -5 5 l-10 0 q-8 0 -7 -8 z" fill="url(#pshorts)" stroke="#5a4632" stroke-opacity="0.5" stroke-width="2.5" stroke-linejoin="round"/>
+  <path d="M88 132 q-10 40 -8 70 q0 9 8 9 q8 0 8 -9 q0 -30 6 -66 z" fill="url(#pskin)" stroke="#5a4632" stroke-opacity="0.5" stroke-width="2.5" stroke-linejoin="round"/>
+  <path d="M152 132 q10 40 8 70 q0 9 -8 9 q-8 0 -8 -9 q0 -30 -6 -66 z" fill="url(#pskin)" stroke="#5a4632" stroke-opacity="0.5" stroke-width="2.5" stroke-linejoin="round"/>
+  <circle cx="81" cy="212" r="9.5" fill="url(#pskin)" stroke="#5a4632" stroke-opacity="0.5" stroke-width="2.5"/>
+  <circle cx="159" cy="212" r="9.5" fill="url(#pskin)" stroke="#5a4632" stroke-opacity="0.5" stroke-width="2.5"/>
+  <!-- polo shirt with collar + sleeves -->
+  <path d="M88 118 q32 -12 64 0 l10 10 q-4 12 -14 16 l-2 54 q-26 8 -52 0 l-2 -54 q-10 -4 -14 -16 z" fill="url(#polo)" stroke="#5a4632" stroke-opacity="0.5" stroke-width="2.5" stroke-linejoin="round"/>
+  <path d="M104 110 l16 12 l16 -12 l4 10 l-14 12 l-6 -4 l-6 4 l-14 -12 z" fill="#a8843e" stroke="#5a4632" stroke-opacity="0.5" stroke-width="2" stroke-linejoin="round"/>
+  <path d="M120 128 l0 22" stroke="#5a4632" stroke-opacity="0.45" stroke-width="2"/>
+  <circle cx="120" cy="140" r="2.4" fill="#5a4632" opacity="0.7"/>
+  <circle cx="120" cy="150" r="2.4" fill="#5a4632" opacity="0.7"/>
+  <path d="M94 190 q26 6 52 0" fill="none" stroke="#5a4632" stroke-opacity="0.3" stroke-width="2" stroke-dasharray="5 4"/>
+  <rect x="128" y="160" width="13" height="13" rx="1" fill="#8a6f3e" opacity="0.7" stroke="#5a4632" stroke-opacity="0.4" stroke-width="1.5" stroke-dasharray="3 2"/>
+  <ellipse cx="110" cy="160" rx="13" ry="26" fill="#ffffff" opacity="0.2"/>
+  <rect x="111" y="94" width="18" height="22" rx="7" fill="#b57e4e" stroke="#5a4632" stroke-opacity="0.4" stroke-width="2"/>
+  <ellipse cx="120" cy="70" rx="33" ry="34" fill="url(#pskin)" stroke="#5a4632" stroke-opacity="0.5" stroke-width="2.5"/>
+  <circle cx="88" cy="74" r="7" fill="url(#pskin)" stroke="#5a4632" stroke-opacity="0.5" stroke-width="2"/>
+  <circle cx="152" cy="74" r="7" fill="url(#pskin)" stroke="#5a4632" stroke-opacity="0.5" stroke-width="2"/>
+  <path d="M88 60 q6 -28 32 -30 q26 -2 32 30 l-6 2 q-2 -10 -8 -12 q0 8 -4 11 q-12 -6 -28 -4 q-12 2 -14 12 z" fill="url(#phair)" stroke="#5a4632" stroke-opacity="0.4" stroke-width="2" stroke-linejoin="round"/>
+  <circle cx="108" cy="74" r="3.2" fill="#2e2620"/>
+  <circle cx="132" cy="74" r="3.2" fill="#2e2620"/>
+  <circle cx="109" cy="73" r="1" fill="#fff" opacity="0.8"/>
+  <circle cx="133" cy="73" r="1" fill="#fff" opacity="0.8"/>
+  <path d="M110 88 q10 7 20 0" fill="none" stroke="#5a3226" stroke-width="2.5" stroke-linecap="round"/>
+  <ellipse cx="99" cy="83" rx="6" ry="4" fill="#d97f6a" opacity="0.35"/>
+  <ellipse cx="141" cy="83" rx="6" ry="4" fill="#d97f6a" opacity="0.35"/>
+</svg>

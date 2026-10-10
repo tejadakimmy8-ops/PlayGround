@@ -1,0 +1,57 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 240 360" role="img" aria-label="Apo girl starter: cotton blouse and skirt">
+  <title>Apo (girl) — Cotton Blouse, starter 1990</title>
+  <defs>
+    <radialGradient id="bskin" cx="42%" cy="34%" r="75%">
+      <stop offset="0%" stop-color="#d29a68"/>
+      <stop offset="60%" stop-color="#c08a58"/>
+      <stop offset="100%" stop-color="#a96f42"/>
+    </radialGradient>
+    <linearGradient id="blouse" x1="0" y1="0" x2="0" y2="1">
+      <stop offset="0%" stop-color="#f3ead6"/>
+      <stop offset="100%" stop-color="#ddcba6"/>
+    </linearGradient>
+    <linearGradient id="skirt" x1="0" y1="0" x2="0" y2="1">
+      <stop offset="0%" stop-color="#9aa27a"/>
+      <stop offset="100%" stop-color="#787f58"/>
+    </linearGradient>
+    <linearGradient id="bhair" x1="0" y1="0" x2="0" y2="1">
+      <stop offset="0%" stop-color="#4a382a"/>
+      <stop offset="100%" stop-color="#2e2318"/>
+    </linearGradient>
+  </defs>
+  <ellipse cx="120" cy="332" rx="54" ry="10" fill="#6b5a44" opacity="0.18"/>
+  <path d="M84 60 q-4 52 2 84 q2 8 9 8 l3 0 q6 0 6 -8 l-1 -24 34 0 -1 24 q0 8 6 8 l3 0 q7 0 9 -8 q6 -32 2 -84 q-6 -30 -36 -30 q-30 0 -36 30 z" fill="url(#bhair)" stroke="#5a4632" stroke-opacity="0.4" stroke-width="2" stroke-linejoin="round"/>
+  <path d="M102 256 q-2 34 -1 58 q0 8 8 8 q8 0 8 -8 q1 -24 1 -58 z" fill="url(#bskin)" stroke="#5a4632" stroke-opacity="0.5" stroke-width="2.5" stroke-linejoin="round"/>
+  <path d="M122 256 q-1 34 0 58 q0 8 8 8 q8 0 8 -8 q1 -24 -1 -58 z" fill="url(#bskin)" stroke="#5a4632" stroke-opacity="0.5" stroke-width="2.5" stroke-linejoin="round"/>
+  <ellipse cx="110" cy="327" rx="15" ry="7" fill="#7a5230" stroke="#5a4632" stroke-opacity="0.5" stroke-width="2"/>
+  <path d="M110 320 l-5 6 M110 320 l5 6" stroke="#4a3826" stroke-width="2.5" stroke-linecap="round"/>
+  <ellipse cx="131" cy="327" rx="15" ry="7" fill="#7a5230" stroke="#5a4632" stroke-opacity="0.5" stroke-width="2"/>
+  <path d="M131 320 l-5 6 M131 320 l5 6" stroke="#4a3826" stroke-width="2.5" stroke-linecap="round"/>
+  <!-- skirt -->
+  <path d="M94 196 q26 -8 52 0 q8 30 12 58 q-38 10 -76 0 q4 -28 12 -58 z" fill="url(#skirt)" stroke="#5a4632" stroke-opacity="0.5" stroke-width="2.5" stroke-linejoin="round"/>
+  <path d="M106 198 q-4 28 -6 54 M120 196 l0 58 M134 198 q4 28 6 54" stroke="#5a4632" stroke-opacity="0.3" stroke-width="2" fill="none"/>
+  <!-- arms -->
+  <path d="M86 134 q-9 36 -7 62 q0 9 8 9 q8 0 8 -9 q0 -26 5 -58 z" fill="url(#bskin)" stroke="#5a4632" stroke-opacity="0.5" stroke-width="2.5" stroke-linejoin="round"/>
+  <path d="M154 134 q9 36 7 62 q0 9 -8 9 q-8 0 -8 -9 q0 -26 -5 -58 z" fill="url(#bskin)" stroke="#5a4632" stroke-opacity="0.5" stroke-width="2.5" stroke-linejoin="round"/>
+  <circle cx="80" cy="206" r="9" fill="url(#bskin)" stroke="#5a4632" stroke-opacity="0.5" stroke-width="2.5"/>
+  <circle cx="160" cy="206" r="9" fill="url(#bskin)" stroke="#5a4632" stroke-opacity="0.5" stroke-width="2.5"/>
+  <!-- blouse with puff sleeves + collar -->
+  <path d="M90 118 q30 -12 60 0 l2 50 q2 22 0 32 q-31 8 -64 0 q-2 -10 0 -32 z" fill="url(#blouse)" stroke="#5a4632" stroke-opacity="0.5" stroke-width="2.5" stroke-linejoin="round"/>
+  <ellipse cx="86" cy="134" rx="12" ry="14" fill="url(#blouse)" stroke="#5a4632" stroke-opacity="0.5" stroke-width="2.5"/>
+  <ellipse cx="154" cy="134" rx="12" ry="14" fill="url(#blouse)" stroke="#5a4632" stroke-opacity="0.5" stroke-width="2.5"/>
+  <path d="M106 110 l14 12 l14 -12 l3 9 l-12 11 l-5 -3 l-5 3 l-12 -11 z" fill="#e4d5b4" stroke="#5a4632" stroke-opacity="0.5" stroke-width="2" stroke-linejoin="round"/>
+  <path d="M120 130 l0 50" stroke="#5a4632" stroke-opacity="0.35" stroke-width="2" stroke-dasharray="4 3"/>
+  <circle cx="120" cy="142" r="2.4" fill="#5a4632" opacity="0.7"/>
+  <circle cx="120" cy="154" r="2.4" fill="#5a4632" opacity="0.7"/>
+  <ellipse cx="108" cy="160" rx="12" ry="22" fill="#ffffff" opacity="0.25"/>
+  <rect x="111" y="94" width="18" height="22" rx="7" fill="#b57e4e" stroke="#5a4632" stroke-opacity="0.4" stroke-width="2"/>
+  <ellipse cx="120" cy="70" rx="33" ry="34" fill="url(#bskin)" stroke="#5a4632" stroke-opacity="0.5" stroke-width="2.5"/>
+  <path d="M88 60 q4 -28 32 -30 q28 -2 32 30 q-3 -7 -9 -9 q0 9 -5 12 q-4 -7 -10 -8 q-1 8 -6 11 q-4 -7 -10 -8 q-2 8 -7 10 q-4 -6 -6 -12 q-5 2 -7 7 q-4 -6 -4 -3 z" fill="url(#bhair)" stroke="#5a4632" stroke-opacity="0.4" stroke-width="2" stroke-linejoin="round"/>
+  <circle cx="108" cy="74" r="3.2" fill="#2e2620"/>
+  <circle cx="132" cy="74" r="3.2" fill="#2e2620"/>
+  <circle cx="109" cy="73" r="1" fill="#fff" opacity="0.8"/>
+  <circle cx="133" cy="73" r="1" fill="#fff" opacity="0.8"/>
+  <path d="M110 88 q10 7 20 0" fill="none" stroke="#5a3226" stroke-width="2.5" stroke-linecap="round"/>
+  <ellipse cx="99" cy="83" rx="6" ry="4" fill="#d97f6a" opacity="0.35"/>
+  <ellipse cx="141" cy="83" rx="6" ry="4" fill="#d97f6a" opacity="0.35"/>
+</svg>

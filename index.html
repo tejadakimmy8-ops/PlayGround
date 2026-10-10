@@ -69,6 +69,17 @@ input[type=text]{width:100%;padding:12px;border:2px solid #3a2a1a;border-radius:
 #adbar{height:100%;width:0;background:#7fb069}
 @media (prefers-reduced-motion:reduce){.prod.pop{animation:none}}
 #verify{font-size:11px;background:#222;color:#cfc;padding:8px 10px;white-space:pre-wrap}
+/* character creation (mobile-first) */
+.avatarWrap{display:flex;gap:10px;align-items:stretch;margin:8px 0}
+.avatarPreview{flex:0 0 130px;background:#faf4e8;border:3px solid #a9743c;border-radius:12px;display:flex;flex-direction:column;align-items:center;justify-content:center;padding:8px}
+.avatarPreview canvas{width:104px;height:140px;background:#faf4e8;border-radius:8px;border-bottom:3px solid #ddd}
+.genderRow{display:flex;gap:8px;margin:6px 0}
+.btn-toggle{flex:1;padding:10px;border:2px solid #3a2a1a;background:#e0d0b0;font-size:14px;font-weight:900;border-radius:12px;cursor:pointer;min-height:48px}
+.btn-toggle.active{background:#7fb069;color:#fff}
+.outfit-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:8px;margin-top:6px}
+.outfit-card{border:2px solid #ccc;border-radius:10px;padding:10px 6px;text-align:center;font-size:12px;font-weight:700;background:#fff;cursor:pointer;min-height:52px;display:flex;align-items:center;justify-content:center}
+.outfit-card.selected{border-color:#2e9e44;background:#e8f5e9;font-weight:900}
+.outfit-card.locked{background:#eee;color:#888;cursor:not-allowed;border-style:dashed}
 </style>
 </head>
 <body>
@@ -140,7 +151,7 @@ input[type=text]{width:100%;padding:12px;border:2px solid #3a2a1a;border-radius:
 
 <!-- STORY -->
 <div class="modal open" id="storyM"><div class="box">
-  <h1>🎬 Tiny Tindahan <small style="font-size:13px">· 1990</small></h1>
+  <h1>🎬 Tiny Tindahan <small style="font-size:13px">· 1990 · Ang Simula ng Kwento</small></h1>
   <div class="storyImg" id="storyImg">🛒</div>
   <p id="storyTxt" style="font-size:15px;min-height:88px"></p>
   <div class="row"><button class="btn ghost" id="skipStory">Skip ⏭</button>
@@ -151,11 +162,30 @@ input[type=text]{width:100%;padding:12px;border:2px solid #3a2a1a;border-radius:
 
 <!-- CHARACTER SELECT -->
 <div class="modal" id="charM"><div class="box">
-  <h1>🧍 Piliin ang tindero/tindera</h1>
-  <label class="note">Pangalan</label><input type="text" id="pname" maxlength="14" value="Apo">
+  <h1>🧍 TINY TINDAHAN</h1>
+  <div class="note" style="font-weight:900">Karakter at Bihis ng Apo</div>
+  <div class="avatarWrap">
+    <div class="avatarPreview">
+      <img id="avatarImg" alt="Apo preview" style="width:104px;height:140px;border-radius:8px;border-bottom:3px solid #ddd;display:none">
+      <canvas id="avatarCv" width="104" height="140"></canvas>
+      <div class="note" id="avatarLbl" style="text-align:center;margin-top:4px"></div>
+    </div>
+    <div style="flex:1">
+      <label class="note">Pangalan</label><input type="text" id="pname" maxlength="15" value="Apo" placeholder="I-type ang iyong Pangalan">
+      <div class="note" style="margin-top:6px"><strong>Kasarian:</strong></div>
+      <div class="genderRow">
+        <button class="btn-toggle" id="gBoy">👦 Lalaki</button>
+        <button class="btn-toggle" id="gGirl">👧 Babae</button>
+      </div>
+    </div>
+  </div>
   <div id="charOpts"></div>
+  <div class="note" style="margin-top:6px"><strong>Mga Damit-Pambahay (Starter):</strong></div>
+  <div id="unlockedOutfits" class="outfit-grid"></div>
+  <div class="note" style="margin-top:6px"><strong>Mga Susunod na Outfit (Locked):</strong></div>
+  <div id="lockedOutfits" class="outfit-grid"></div>
   <div class="row" style="margin-top:10px"><button class="btn green" id="startBtn">Magsimula sa 1990 🎉</button></div>
-  <div class="note">Ibang hiwa ng damit sa bawat era (hindi recolor lang): 1990 baro/tsinelas → 2000 polo → 2010 tee+apron → 2026 modern polo+apron.</div>
+  <div class="note">Starter: 1990 pambahay. Locked outfits (Lv. 8 / Lv. 15, 2000s+) nabubuksan sa Upgrades pag umabot sa bagong era — ibang hiwa, hindi recolor lang.</div>
 </div></div>
 
 <!-- DEMO AD -->
@@ -220,14 +250,43 @@ const HAIRS=["#1c1c1c","#4d2c1a","#7a4a1e","#cfcfcf","#5b2c14","#2b2118"];
 const HSTYLES=["short","buzz","long","bun","pigtail","cap","thin"];
 const CLOTHES90=["Baro't Tsinelas","Daster 90s","Polo Barong","Palda't Blusa"];
 const CLOTHESNEW=["Polo 2000","Tee + Apron","Modern Polo","Talipapa Vest"];
+/* character creation: gender + starter/locked outfits (from subcontractor draft, mobile-adapted) */
+const OUTFITS={
+ boy:{unlocked:[
+   {id:"b_s1",name:"Sando & Puruntong"},
+   {id:"b_s2",name:"Faded Shirt & Shorts"},
+   {id:"b_s3",name:"Lumang Polo"}],
+  locked:[
+   {id:"b_l1",name:"🔒 Lv. 8 - Uniform"},
+   {id:"b_l2",name:"🔒 Lv. 15 - 90s Jacket"}]},
+ girl:{unlocked:[
+   {id:"g_s1",name:"Simpleng Duster"},
+   {id:"g_s2",name:"Pambahay Shirt & Shorts"},
+   {id:"g_s3",name:"Cotton Blouse"}],
+  locked:[
+   {id:"g_l1",name:"🔒 Lv. 8 - Sunday Dress"},
+   {id:"g_l2",name:"🔒 Lv. 15 - Overalls"}]}
+};
+function outfitLabel(){
+ if(!S||!S.char)return "";
+ const g=(S.char.gender==="girl")?"girl":"boy";
+ const all=[...OUTFITS[g].unlocked,...OUTFITS[g].locked];
+ const f=all.find(o=>o.id===S.char.outfit);
+ if(f)return f.name.replace(/^🔒\s*/,"");
+ return outfitName();
+}
 /* ============ STATE ============ */
 const KEY="tinyTindahan_v1";
 let S;
 function defState(){const stock={};["pompoms","sweetcorn","bangus","lumpia","chocnut","sarsi"].forEach(k=>stock[k]=8);
  return {coins:40,stock,dbox:{},shop:0,unlocked:["pompoms","sweetcorn","bangus","lumpia","chocnut","sarsi"],
- staff:0,decor:0,eraIdx:0,seenStory:false,char:{name:"Apo",skin:1,hair:1,hs:0,cloth:0,body:1},
+ staff:0,decor:0,eraIdx:0,seenStory:false,char:{name:"Apo",gender:"boy",outfit:"b_s1",skin:1,hair:1,hs:0,cloth:0,body:1},
  lastClaim:"",muted:false,vol:0.7,reduced:false,sales:0};}
-function load(){try{const r=localStorage.getItem(KEY);if(r){S=Object.assign(defState(),JSON.parse(r));return;}}catch(e){}S=defState();}
+function load(){try{const r=localStorage.getItem(KEY);if(r){const o=JSON.parse(r);S=Object.assign(defState(),o);S.char=Object.assign(defState().char,o.char||{});
+ // migrate old saves without gender/outfit
+ if(!S.char.gender)S.char.gender="boy";
+ if(!S.char.outfit)S.char.outfit=S.char.gender==="girl"?"g_s1":"b_s1";
+ return;}}catch(e){}S=defState();}
 function save(){try{localStorage.setItem(KEY,JSON.stringify(S));}catch(e){}}
 function manilaDate(){try{return new Intl.DateTimeFormat("en-CA",{timeZone:"Asia/Manila",year:"numeric",month:"2-digit",day:"2-digit"}).format(new Date());}catch(e){const d=new Date(Date.now()+8*3600e3);return d.toISOString().slice(0,10);}}
 function capacity(){return SHOPLV[S.shop].cap;}
@@ -287,8 +346,8 @@ function drawPerson(x,y,s,o,phase,mode){
  });
  // torso (clothing shape varies by outfit)
  ctx.fillStyle=o.cloth;
- if((o.outfit||"").includes("Daster")||(o.outfit||"").includes("Palda")){ctx.beginPath();ctx.moveTo(-14,-84);ctx.lineTo(14,-84);ctx.lineTo(20,-42);ctx.lineTo(-20,-42);ctx.closePath();ctx.fill();}
- else if((o.outfit||"").includes("Vest")||(o.outfit||"").includes("Apron")){ctx.fillRect(-13,-84,26,42);ctx.fillStyle="#00000022";ctx.fillRect(-13,-84,26,12);}
+ if(/Daster|Palda|Duster|Dress|Blouse/i.test(o.outfit||"")){ctx.beginPath();ctx.moveTo(-14,-84);ctx.lineTo(14,-84);ctx.lineTo(20,-42);ctx.lineTo(-20,-42);ctx.closePath();ctx.fill();}
+ else if(/Vest|Apron|Uniform|Jacket|Overalls|Polo/i.test(o.outfit||"")){ctx.fillRect(-13,-84,26,42);ctx.fillStyle="#00000022";ctx.fillRect(-13,-84,26,12);}
  else{ctx.fillRect(-13,-84,26,42);}
  ctx.strokeStyle="#3a2a1a";ctx.lineWidth=2;ctx.strokeRect(-13,-84,26,42);
  // arms with swing
@@ -424,7 +483,7 @@ function scene(now){
  if(S&&S.decor>0){ctx.font="20px sans-serif";ctx.fillText("🪴",-120,-80+Math.sin(walkT*2)*2*sway());ctx.fillText("🪴",140,-60);if(S.decor>1)ctx.fillText("🎏",-140,-60);}
  ctx.restore();
  // vendor (player) behind cart
- if(S){const c=S.char;drawPerson(cartX-20,cartY+34,0.62,{skin:SKINS[c.skin%6],hair:HAIRS[c.hair%6],hs:HSTYLES[c.hs%7],cloth:"#7fb069",outfit:outfitName()},walkT*2,"idle");
+ if(S){const c=S.char;drawPerson(cartX-20,cartY+34,0.62,{skin:SKINS[c.skin%6],hair:HAIRS[c.hair%6],hs:HSTYLES[c.hs%7],cloth:c.gender==="girl"?"#e86fb0":"#7fb069",outfit:outfitLabel()},walkT*2,"idle");
   ctx.fillStyle="#3a2a1a";ctx.font="bold 11px sans-serif";ctx.textAlign="center";
   const nm=c.name;const w=ctx.measureText(nm).width+12;
   ctx.fillStyle="#fff8ec";ctx.strokeStyle="#3a2a1a";ctx.lineWidth=2;
@@ -638,38 +697,112 @@ function renderUpg(){
 /* ============ CHARACTER ============ */
 function renderChar(){
  const p=document.getElementById("charPane");
- p.innerHTML="<div class='card'>👤 <b>"+S.char.name+"</b> · "+outfitName()+" · Era "+ERAS[S.eraIdx]+"<br><span class='note'>Damit nag-iiba ng hiwa bawat era (hindi recolor lang).</span><br><br><button class='btn' id='editC'>Baguhin</button> <button class='btn ghost' id='replay3'>↺ Replay Story</button></div>";
- p.querySelector("#editC").onclick=()=>{buildCharOpts();document.getElementById("charM").classList.add("open");};
+ const g=(S.char.gender==="girl")?"👧 Babae":"👦 Lalaki";
+ p.innerHTML="<div class='card'>👤 <b>"+escapeHtml(S.char.name)+"</b> · "+g+" · "+escapeHtml(outfitLabel())+" · Era "+ERAS[S.eraIdx]+"<br><span class='note'>Starter: 1990 pambahay. Locked outfits mabubuksan sa bagong era (Upgrades).</span><br><br><button class='btn' id='editC'>Baguhin</button> <button class='btn ghost' id='replay3'>↺ Replay Story</button></div>";
+ p.querySelector("#editC").onclick=()=>{syncName();buildCharOpts();document.getElementById("charM").classList.add("open");};
  p.querySelector("#replay3").onclick=()=>{storyI=0;document.getElementById("storyM").classList.add("open");showStory();};
 }
-function buildCharOpts(){
- const c=S.char,el=document.getElementById("charOpts");
- function grp(t,arr,cur,fn){
-  let h="<div class='note' style='margin-top:8px'>"+t+"</div><div class='opt'>";
-  arr.forEach((a,i)=>{h+="<button data-g='"+t+"' data-i='"+i+"' class='"+(cur===i?"sel":"")+"'>"+a+"</button>";});return h+"</div>";}
- el.innerHTML=grp("Balat",["☀️ maputi","🍯 kayumanggi","🤎 morena","🌑 deep"],c.skin%4,[0,1,2,3].includes(0)?0:0)
-  +grp("Buhok",["⚫ itim","🟤 brown","🟡 light","⚪ puti"],c.hair%4)
-  +grp("Gupit",HSTYLES,c.hs)
-  +grp("Katawan",["payat","sakto","malusog"],c.body)
-  +grp("Damit-1990",CLOTHES90,c.cloth%4);
- el.querySelectorAll("button").forEach(b=>b.onclick=()=>{
-  const g=b.dataset.g,i=+b.dataset.i;
-  if(g==="Balat")c.skin=[1,2,4,5][i]||1;
-  if(g==="Buhok")c.hair=i+1;if(g==="Gupit")c.hs=i;if(g==="Katawan")c.body=i;if(g==="Damit-1990")c.cloth=i;
-  S.char.name=document.getElementById("pname").value||"Apo";
-  buildCharOpts();save();});
- document.getElementById("pname").value=c.name;
+function escapeHtml(s){return String(s).replace(/[&<>"]/g,c=>({"&":"&amp;","<":"&lt;",">":"&gt;",'"':"&quot;"}[c]));}
+function syncName(){const v=document.getElementById("pname").value.trim();if(v)S.char.name=v.slice(0,15);}
+function setGender(g){
+ S.char.gender=g;
+ S.char.outfit=g==="girl"?"g_s1":"b_s1";
+ syncName();save();buildCharOpts();
 }
+function selectOutfit(id){
+ S.char.outfit=id;syncName();save();buildCharOpts();
+}
+function buildCharOpts(){
+ const c=S.char;
+ document.getElementById("pname").value=c.name||"Apo";
+ document.getElementById("gBoy").classList.toggle("active",c.gender!=="girl");
+ document.getElementById("gGirl").classList.toggle("active",c.gender==="girl");
+ const el=document.getElementById("charOpts");
+ function grp(t,arr,cur,key){
+  let h="<div class='note' style='margin-top:8px'><strong>"+t+"</strong></div><div class='opt'>";
+  arr.forEach((a,i)=>{h+="<button data-g='"+key+"' data-i='"+i+"' class='"+(cur===i?"sel":"")+"'>"+a+"</button>";});return h+"</div>";}
+ el.innerHTML=grp("Balat",["☀️ maputi","🍯 kayumanggi","🤎 morena","🌑 deep"],[1,2,4,5].indexOf(c.skin),"skin")
+  +grp("Buhok",["⚫ itim","🟤 brown","🟡 light","⚪ puti"],[1,2,3,4].indexOf(c.hair),"hair")
+  +grp("Gupit",HSTYLES,c.hs,"hs")
+  +grp("Katawan",["payat","sakto","malusog"],c.body,"body");
+ el.querySelectorAll("button").forEach(b=>b.onclick=()=>{
+  const g=b.dataset.g,i=+b.dataset.i;syncName();
+  if(g==="skin")c.skin=[1,2,4,5][i]??1;
+  if(g==="hair")c.hair=[1,2,3,4][i]??1;
+  if(g==="hs")c.hs=i;if(g==="body")c.body=i;
+  save();buildCharOpts();});
+ // outfit grids (starter selectable, locked disabled)
+ const g=c.gender==="girl"?"girl":"boy";
+ const u=document.getElementById("unlockedOutfits"),l=document.getElementById("lockedOutfits");
+ u.innerHTML="";l.innerHTML="";
+ OUTFITS[g].unlocked.forEach(o=>{
+  const d=document.createElement("div");
+  d.className="outfit-card"+(c.outfit===o.id?" selected":"");
+  d.textContent=o.name;d.onclick=()=>selectOutfit(o.id);u.appendChild(d);});
+ OUTFITS[g].locked.forEach(o=>{
+  const d=document.createElement("div");
+  d.className="outfit-card locked";d.textContent=o.name;
+  d.onclick=()=>toast("🔒 Mabubuksan sa susunod na era (Upgrades)");
+  l.appendChild(d);});
+ renderAvatarPreview();
+}
+/* watercolor portrait per outfit (falls back to canvas drawing if missing) */
+const AVATAR_SVG={b_s1:"assets/characters/b-sando.svg",b_s2:"assets/characters/b-faded.svg",b_s3:"assets/characters/b-polo.svg",b_l1:"assets/characters/b-uniform.svg",b_l2:"assets/characters/b-jacket.svg",g_s1:"assets/characters/g-duster.svg",g_s2:"assets/characters/g-pambahay.svg",g_s3:"assets/characters/g-blouse.svg",g_l1:"assets/characters/g-dress.svg",g_l2:"assets/characters/g-overalls.svg"};
+function renderAvatarPreview(){
+ const img=document.getElementById("avatarImg"),cv2=document.getElementById("avatarCv");
+ const c=S.char,src=AVATAR_SVG[c.outfit];
+ if(img&&src){img.style.display="";img.src=src;if(cv2)cv2.style.display="none";
+  img.onerror=()=>{img.style.display="none";if(cv2)cv2.style.display="";drawAvatarCanvas();}; }
+ else if(cv2){cv2.style.display="";drawAvatarCanvas();}
+ document.getElementById("avatarLbl").textContent=(c.gender==="girl"?"👧 ":"👦 ")+outfitLabel();
+}
+function drawAvatarCanvas(){
+ const cv2=document.getElementById("avatarCv");if(!cv2)return;
+ const x=cv2.getContext("2d");x.clearRect(0,0,104,140);
+ const c=S.char;
+ const skin=SKINS[c.skin%SKINS.length],hair=HAIRS[c.hair%HAIRS.length];
+ const girl=c.gender==="girl";
+ // background
+ x.fillStyle="#faf4e8";x.fillRect(0,0,104,140);
+ // shadow
+ x.fillStyle="#0002";x.beginPath();x.ellipse(52,128,26,6,0,0,7);x.fill();
+ const bw=c.body===0?14:c.body===2?24:19; // body width varies
+ // legs
+ x.strokeStyle=girl?"#e8a06e":"#3a3a5a";x.lineWidth=8;x.lineCap="round";
+ x.beginPath();x.moveTo(46,96);x.lineTo(44,122);x.moveTo(58,96);x.lineTo(60,122);x.stroke();
+ // torso: different cut per outfit category
+ const lbl=outfitLabel();
+ x.fillStyle=girl?"#e86fb0":"#2e9bd6";
+ if(/Duster|Dress|Blouse|Palda/i.test(lbl)){x.beginPath();x.moveTo(36,52);x.lineTo(68,52);x.lineTo(76,98);x.lineTo(28,98);x.closePath();x.fill();}
+ else if(/Uniform|Jacket|Overalls|Apron|Vest|Polo/i.test(lbl)){x.fillStyle=girl?"#fff":"#f5f5f5";x.fillRect(52-bw,52,bw*2,46);x.fillStyle=girl?"#e86fb0":"#2e9bd6";x.fillRect(52-bw,52,7,46);x.fillRect(52+bw-7,52,7,46);}
+ else{x.fillRect(52-bw,52,bw*2,46);} // sando/shirt
+ x.strokeStyle="#3a2a1a";x.lineWidth=2;x.strokeRect(52-bw,52,bw*2,46);
+ // arms
+ x.strokeStyle=skin;x.lineWidth=7;
+ x.beginPath();x.moveTo(52-bw,58);x.lineTo(34,86);x.moveTo(52+bw,58);x.lineTo(70,86);x.stroke();
+ // head
+ x.fillStyle=skin;x.beginPath();x.arc(52,36,15,0,7);x.fill();x.strokeStyle="#3a2a1a";x.lineWidth=1.5;x.stroke();
+ x.fillStyle="#222";x.fillRect(44,34,3,4);x.fillRect(57,34,3,4);
+ x.strokeStyle="#7a3a1a";x.beginPath();x.arc(52,41,5,0.2,Math.PI-0.2);x.stroke();
+ // hair
+ x.fillStyle=hair;
+ if(girl){x.fillRect(36,16,32,26);x.beginPath();x.arc(52,32,15,Math.PI,0);x.fill();}
+ else if(HSTYLES[c.hs%7]==="cap"){x.fillStyle="#d42a2a";x.fillRect(37,18,30,10);}
+ else{x.beginPath();x.arc(52,30,15,Math.PI*0.95,Math.PI*2.05);x.fill();x.fillRect(37,28,30,6);}
+}
+document.getElementById("gBoy").onclick=()=>setGender("boy");
+document.getElementById("gGirl").onclick=()=>setGender("girl");
+document.getElementById("pname").addEventListener("input",()=>{syncName();save();renderAvatarPreview();});
 document.getElementById("startBtn").onclick=()=>{
- S.char.name=document.getElementById("pname").value||"Apo";
+ syncName();if(!S.char.name)S.char.name="Apo";
  S.seenStory=true;save();document.getElementById("charM").classList.remove("open");toast("Mabuhay, "+S.char.name+"! 🎉");renderAll();};
-/* ============ STORY ============ */
+/* ============ STORY (Lola's letter + cart discovery, mobile cutscene) ============ */
 const STORY=[
- ["🛒","1990, Barangay Sta. Mesa…\n“Nay, ako na pong bahala sa karo ni Lola.” — Ikaw, bagong dating na may dalang pangarap."],
- ["🏠","Narito ang lumang karong kahoy ni Lola: maalikabok, pero matibay. “Ayusin natin 'yan, apo!”"],
- ["🍪","Inayos mo ang natirang meryenda: Pompoms, Sweet Corn, Sizzling Bangus, Lumpia, Choc Nut… at malamig na Sarsi!"],
- ["🧒","Unang customer: si Jun-jun, tumatakbo! “Ate/Kuya, pabili po! Piso lang dala ko noong araw… ngayon, barya ko ipon!”"],
- ["🎉","Simula ng Tiny Tindahan! Magbenta, mag-ipon ng 🪙 (game currency lang), mag-upgrade hanggang 2026!"],
+ ["💌","“Mahal kong apo, kung nababasa mo ito, oras na para ipasa ko sa iyo ang ating maliit na tindahan…” — sulat ni Lola, 1990, Barangay Sta. Mesa."],
+ ["🏠","“Maliit man at payak, sa kariton na ito umikot ang buhay ng ating komunidad noong araw. Dito nabuo ang mga kwento ng ating mga kapitbahay.”"],
+ ["🍪","“Kakaunti man ang paninda sa ngayon, naniniwala akong sa iyong sipag at tiyaga, muli mong mabubuhay ang Tiny Tindahan.”"],
+ ["🛒","Narito ang lumang karong kahoy ni Lola: maalikabok pero matibay. Inayos mo ang natirang meryenda — Pompoms, Sweet Corn, Sizzling Bangus, Lumpia, Choc Nut… at malamig na Sarsi!"],
+ ["🧒","Unang customer: si Jun-jun, tumatakbo! “Ate/Kuya, pabili po!” — Simula ng Tiny Tindahan! Magbenta, mag-ipon ng 🪙 (game currency lang), mag-upgrade hanggang 2026!"],
 ];
 let storyI=0;
 function showStory(){

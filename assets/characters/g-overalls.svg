@@ -1,0 +1,64 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 240 360" role="img" aria-label="Apo girl locked outfit: overalls">
+  <title>Apo (girl) — Overalls, locked Lv. 15</title>
+  <defs>
+    <radialGradient id="oskin" cx="42%" cy="34%" r="75%">
+      <stop offset="0%" stop-color="#d29a68"/>
+      <stop offset="60%" stop-color="#c08a58"/>
+      <stop offset="100%" stop-color="#a96f42"/>
+    </radialGradient>
+    <linearGradient id="denim2" x1="0" y1="0" x2="0" y2="1">
+      <stop offset="0%" stop-color="#7d94a8"/>
+      <stop offset="100%" stop-color="#5a7186"/>
+    </linearGradient>
+    <linearGradient id="stripe" x1="0" y1="0" x2="1" y2="0">
+      <stop offset="0%" stop-color="#e8ddc4"/>
+      <stop offset="50%" stop-color="#e8ddc4"/>
+      <stop offset="50%" stop-color="#c25a4a"/>
+      <stop offset="100%" stop-color="#c25a4a"/>
+    </linearGradient>
+    <linearGradient id="ohair" x1="0" y1="0" x2="0" y2="1">
+      <stop offset="0%" stop-color="#4a382a"/>
+      <stop offset="100%" stop-color="#2e2318"/>
+    </linearGradient>
+  </defs>
+  <ellipse cx="120" cy="332" rx="54" ry="10" fill="#6b5a44" opacity="0.18"/>
+  <path d="M98 240 q-2 44 -1 72 q0 8 8 8 l6 0 q8 0 8 -8 q1 -28 1 -72 z" fill="url(#denim2)" stroke="#5a4632" stroke-opacity="0.5" stroke-width="2.5" stroke-linejoin="round"/>
+  <path d="M121 240 q-1 44 0 72 q0 8 8 8 l6 0 q8 0 8 -8 q1 -28 -1 -72 z" fill="url(#denim2)" stroke="#5a4632" stroke-opacity="0.5" stroke-width="2.5" stroke-linejoin="round"/>
+  <ellipse cx="108" cy="326" rx="17" ry="9" fill="#e8e2d2" stroke="#5a4632" stroke-opacity="0.55" stroke-width="2"/>
+  <path d="M93 326 q15 5 30 0" fill="none" stroke="#3d4f6e" stroke-width="3"/>
+  <ellipse cx="134" cy="326" rx="17" ry="9" fill="#e8e2d2" stroke="#5a4632" stroke-opacity="0.55" stroke-width="2"/>
+  <path d="M119 326 q15 5 30 0" fill="none" stroke="#3d4f6e" stroke-width="3"/>
+  <!-- striped tee -->
+  <path d="M88 118 q32 -12 64 0 l10 10 q-4 12 -14 16 l-2 44 q-26 7 -52 0 l-2 -44 q-10 -4 -14 -16 z" fill="url(#stripe)" stroke="#5a4632" stroke-opacity="0.5" stroke-width="2.5" stroke-linejoin="round"/>
+  <path d="M88 132 q-10 12 -12 26 q8 6 18 4 q-3 -15 -6 -30" fill="url(#stripe)" stroke="#5a4632" stroke-opacity="0.5" stroke-width="2.5" stroke-linejoin="round"/>
+  <path d="M152 132 q10 12 12 26 q-8 6 -18 4 q3 -15 6 -30" fill="url(#stripe)" stroke="#5a4632" stroke-opacity="0.5" stroke-width="2.5" stroke-linejoin="round"/>
+  <!-- overalls bib + straps -->
+  <path d="M100 168 l0 -44 l12 0 l0 40 M128 124 l0 44 M128 124 l12 0 l0 40" fill="none" stroke="#5a7186" stroke-width="11" stroke-linecap="round"/>
+  <path d="M100 168 l0 -44 l12 0 l0 40 M128 124 l0 44 M128 124 l12 0 l0 40" fill="none" stroke="#5a4632" stroke-opacity="0.35" stroke-width="13" stroke-linecap="round" opacity="0.4"/>
+  <rect x="98" y="166" width="44" height="40" rx="6" fill="url(#denim2)" stroke="#5a4632" stroke-opacity="0.5" stroke-width="2.5"/>
+  <rect x="92" y="204" width="56" height="52" rx="8" fill="url(#denim2)" stroke="#5a4632" stroke-opacity="0.5" stroke-width="2.5"/>
+  <rect x="110" y="176" width="20" height="14" rx="2" fill="#46586c" stroke="#5a4632" stroke-opacity="0.5" stroke-width="2"/>
+  <circle cx="104" cy="172" r="2.6" fill="#d8b24a" stroke="#5a4632" stroke-width="1.4"/>
+  <circle cx="136" cy="172" r="2.6" fill="#d8b24a" stroke="#5a4632" stroke-width="1.4"/>
+  <path d="M92 226 l56 0" stroke="#5a4632" stroke-opacity="0.3" stroke-width="2" stroke-dasharray="5 4"/>
+  <!-- arms -->
+  <path d="M84 140 q-8 34 -6 58 q0 9 8 9 q8 0 8 -9 q0 -24 4 -54 z" fill="url(#oskin)" stroke="#5a4632" stroke-opacity="0.5" stroke-width="2.5" stroke-linejoin="round"/>
+  <path d="M156 140 q8 34 6 58 q0 9 -8 9 q-8 0 -8 -9 q0 -24 -4 -54 z" fill="url(#oskin)" stroke="#5a4632" stroke-opacity="0.5" stroke-width="2.5" stroke-linejoin="round"/>
+  <circle cx="79" cy="208" r="9" fill="url(#oskin)" stroke="#5a4632" stroke-opacity="0.5" stroke-width="2.5"/>
+  <circle cx="161" cy="208" r="9" fill="url(#oskin)" stroke="#5a4632" stroke-opacity="0.5" stroke-width="2.5"/>
+  <rect x="111" y="94" width="18" height="22" rx="7" fill="#b57e4e" stroke="#5a4632" stroke-opacity="0.4" stroke-width="2"/>
+  <ellipse cx="120" cy="70" rx="33" ry="34" fill="url(#oskin)" stroke="#5a4632" stroke-opacity="0.5" stroke-width="2.5"/>
+  <!-- twin braids -->
+  <path d="M90 60 q-14 30 -10 70 q1 10 8 9 q7 -1 6 -10 q-3 -32 4 -58 z" fill="url(#ohair)" stroke="#5a4632" stroke-opacity="0.4" stroke-width="2"/>
+  <path d="M150 60 q14 30 10 70 q-1 10 -8 9 q-7 -1 -6 -10 q3 -32 -4 -58 z" fill="url(#ohair)" stroke="#5a4632" stroke-opacity="0.4" stroke-width="2"/>
+  <circle cx="89" cy="132" r="7" fill="#c25a4a" stroke="#5a4632" stroke-opacity="0.5" stroke-width="2"/>
+  <circle cx="151" cy="132" r="7" fill="#c25a4a" stroke="#5a4632" stroke-opacity="0.5" stroke-width="2"/>
+  <path d="M88 60 q4 -28 32 -30 q28 -2 32 30 q-3 -7 -9 -9 q0 9 -5 12 q-4 -7 -10 -8 q-1 8 -6 11 q-4 -7 -10 -8 q-2 8 -7 10 q-4 -6 -6 -12 q-5 2 -7 7 q-4 -6 -4 -3 z" fill="url(#ohair)" stroke="#5a4632" stroke-opacity="0.4" stroke-width="2" stroke-linejoin="round"/>
+  <circle cx="108" cy="74" r="3.2" fill="#2e2620"/>
+  <circle cx="132" cy="74" r="3.2" fill="#2e2620"/>
+  <circle cx="109" cy="73" r="1" fill="#fff" opacity="0.8"/>
+  <circle cx="133" cy="73" r="1" fill="#fff" opacity="0.8"/>
+  <path d="M109 88 q11 8 22 0" fill="none" stroke="#5a3226" stroke-width="2.5" stroke-linecap="round"/>
+  <ellipse cx="99" cy="83" rx="6" ry="4" fill="#d97f6a" opacity="0.4"/>
+  <ellipse cx="141" cy="83" rx="6" ry="4" fill="#d97f6a" opacity="0.4"/>
+</svg>
